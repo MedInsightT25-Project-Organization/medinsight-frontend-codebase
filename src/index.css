@@ -1,0 +1,87 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Custom Global Styles */
+:root {
+	--primary-color: #0055ed;
+	--dark-primary: #00225f;
+	--secondary-color: #00ae36;
+	--dark-secondary: #006820;
+	--accent-color: #ecf6fe;
+	--text-color: #1e293b;
+	--bg-color: #ecf6fe;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	scroll-behavior: smooth;
+}
+
+/* Apply base styles to the whole app */
+body {
+	@apply bg-[var(--bg-color)] text-[var(--text-color)] font-poppins leading-relaxed text-base w-[100vw];
+}
+
+/* Global container for consistent spacing */
+.container {
+	@apply max-w-7xl mx-auto px-4 md:px-8;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	@apply font-workSans text-gray-900 font-semibold;
+}
+
+h1 {
+	@apply text-4xl md:text-5xl;
+}
+
+h2 {
+	@apply text-3xl md:text-4xl;
+}
+
+h3 {
+	@apply text-2xl md:text-3xl;
+}
+
+h4 {
+	@apply text-xl md:text-2xl;
+}
+
+/* Buttons */
+.btn {
+	@apply inline-flex items-center justify-between gap-3 px-6 py-3 rounded-lg text-sm font-normal transition-all duration-300;
+}
+
+.btn-primary {
+	@apply bg-[var(--primary-color)] text-white hover:bg-[var(--dark-primary)];
+}
+
+.btn-secondary {
+	@apply bg-[var(--secondary-color)] text-white hover:bg-[var(--dark-secondary)];
+}
+
+.btn-outline {
+	@apply border border-[var(--primary-color)] text-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-white;
+}
+
+/* Links */
+a {
+	@apply text-[var(--primary-color)] hover:text-[var(--secondary-color)];
+}
+
+.active {
+	@apply text-[var(--secondary-color)];
+}
+
+.soft-shadow {
+	box-shadow: 0 8px 30px rgba(0, 85, 237, 0.2);
+}
