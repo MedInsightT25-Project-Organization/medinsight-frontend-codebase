@@ -36,9 +36,10 @@ const HeroSlides = () => {
 			spaceBetween={0}
 			centeredSlides={true}
 			autoplay={{
-				delay: 7000,
+				delay: 5000,
 				disableOnInteraction: false,
 			}}
+			speed={2000}
 			loop={true}
 			pagination={{ clickable: true }}
 			navigation={false}
@@ -53,7 +54,7 @@ const HeroSlides = () => {
 						style={{ backgroundImage: `url(${slide.image})` }}
 					>
 						{/* Overlay */}
-						<div className="absolute inset-0 bg-darkPrimary bg-opacity-50 flex flex-col gap-5 items-center justify-center text-center p-6">
+						<div className="absolute inset-0 bg-darkPrimary bg-opacity-60 flex flex-col gap-5 items-center justify-center text-center p-6">
 							<div className="text-white max-w-2xl">
 								<h1 className="text-2xl sm:text-3xl md:text-6xl font-bold mb-2 text-white">
 									{slide.title}
