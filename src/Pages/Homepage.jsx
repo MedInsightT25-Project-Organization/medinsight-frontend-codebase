@@ -1,11 +1,17 @@
-import React from 'react'
+import React from "react";
+import HeroSlides from "../Components/HeroSlide/HeroSlides";
+import AboutSection from "../Components/AboutSection";
 
 const Homepage = () => {
-  return (
-    <div className='bg-primary'>
-      
-      Homepage</div>
-  )
-}
+	return (
+		<div className="">
+			{/* Hero Slide section */}
+			<HeroSlides />
 
-export default Homepage
+      {/* About Section */}
+      <AboutSection/>
+		</div>
+	);
+};
+
+export default Homepage;

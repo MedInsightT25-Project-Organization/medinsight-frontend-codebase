@@ -22,12 +22,12 @@
 
 /* Apply base styles to the whole app */
 body {
-	@apply bg-[var(--bg-color)] text-[var(--text-color)] font-poppins leading-relaxed text-base w-[100vw];
+	@apply bg-[var(--bg-color)] text-[var(--text-color)] font-poppins leading-relaxed text-base w-[100vw] overflow-x-hidden;
 }
 
 /* Global container for consistent spacing */
 .container {
-	@apply max-w-7xl mx-auto px-4 md:px-8;
+	@apply max-w-7xl mx-auto py-16 px-8 md:px-14 lg:px-32;
 }
 
 /* Headings */
@@ -58,7 +58,7 @@ h4 {
 
 /* Buttons */
 .btn {
-	@apply inline-flex items-center justify-between gap-3 px-6 py-3 rounded-lg text-sm font-normal transition-all duration-300;
+	@apply inline-flex items-center justify-between gap-3 p-4 sm:px-6  rounded-lg text-xs sm:text-sm font-normal transition-all duration-500 overflow-x-hidden;
 }
 
 .btn-primary {
@@ -67,6 +67,9 @@ h4 {
 
 .btn-secondary {
 	@apply bg-[var(--secondary-color)] text-white hover:bg-[var(--dark-secondary)];
+}
+.btn-white {
+	@apply bg-[var(--accent-color)] text-[var(--primary-color)] hover:text-white hover:bg-[var(--dark-secondary)];
 }
 
 .btn-outline {
