@@ -9,8 +9,8 @@
 	--secondary-color: #00ae36;
 	--dark-secondary: #006820;
 	--accent-color: #ecf6fe;
-	--text-color: #1e293b;
-	--bg-color: #ecf6fe;
+	--text-color: #3b4047;
+	--bg-color: #f1f9ff;
 }
 
 * {
@@ -27,7 +27,7 @@ body {
 
 /* Global container for consistent spacing */
 .container {
-	@apply max-w-7xl mx-auto py-16 px-8 md:px-14 lg:px-32;
+	@apply max-w-[100rem] mx-auto py-24 px-4 md:px-12 lg:px-24;
 }
 
 /* Headings */

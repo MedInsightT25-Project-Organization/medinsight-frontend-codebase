@@ -5,6 +5,7 @@ import { FiSearch } from "react-icons/fi";
 import { FaOpencart } from "react-icons/fa6";
 import { IoIosSend } from "react-icons/io";
 import { TbMenu3 } from "react-icons/tb";
+import { HiChevronRight } from "react-icons/hi";
 const NavBar = () => {
 	const [showNavbar, setShowNavbar] = useState(false);
 
@@ -70,27 +71,41 @@ const NavBar = () => {
 
 			{/* Mobile Navbar */}
 			{showNavbar && (
-				<div className="lg:hidden left-0 top-0 bottom-0 w-[14rem] h-screen bg-white soft-shadow">
-					<ul className="pt-16 p-10 flex flex-col items-lft justify-center text-xs gap-8 font-medium">
-						<NavLink to="/" onClick={toggleNavbar}>
-							<li>HOME</li>
-						</NavLink>
-						<NavLink to="about" onClick={toggleNavbar}>
-							<li>ABOUT</li>
-						</NavLink>
-						<NavLink to="lab-tests" onClick={toggleNavbar}>
-							<li>LAB TESTS</li>
-						</NavLink>
-						<NavLink to="hospitals" onClick={toggleNavbar}>
-							<li>HOSPITALS</li>
-						</NavLink>
-						<NavLink to="contact" onClick={toggleNavbar}>
-							<li>CONTACT</li>
-						</NavLink>
-					</ul>
+				<div onClick={toggleNavbar} className="fixed inset-0 bg-darkPrimary bg-opacity-40 backdrop-blur-sm z-40">
+					<div className="fixed left-0 top-0 bottom-0 w-[14rem] h-screen bg-white p-10 z-50 lg:hidden soft-shadow">
+
+						{/* Logo */}
+						<div>
+							<img
+								src={logo}
+								alt="Medinsight-logo"
+								className="w-[9rem] sm:w-[16rem] md:w-[20rem] max-w-40 mx-auto"
+							/>
+						</div>
+						<ul className="pt-16 p-5 flex flex-col items-left justify-center text-sm gap-10 font-normal text-primary">
+							<NavLink to="/" onClick={toggleNavbar}>
+								<li className="flex justify-between items-center group hover:text-secondary transition duration-300">Home
+									<HiChevronRight className="text-lg group-hover:translate-x-1 transition-transform duration-300" />
+								</li>
+							</NavLink>
+							<NavLink to="about" onClick={toggleNavbar}>
+								<li className="flex justify-between items-center group hover:text-secondary transition duration-300">About<HiChevronRight className="text-lg group-hover:translate-x-1 transition-transform duration-300" /></li>
+							</NavLink>
+							<NavLink to="lab-tests" onClick={toggleNavbar}>
+								<li className="flex justify-between items-center group hover:text-secondary transition duration-300">Lab Tests <HiChevronRight className="text-lg group-hover:translate-x-1 transition-transform duration-300" /></li>
+							</NavLink>
+							<NavLink to="hospitals" onClick={toggleNavbar}>
+								<li className="flex justify-between items-center group hover:text-secondary transition duration-300">Hospitals <HiChevronRight className="text-lg group-hover:translate-x-1 transition-transform duration-300" /></li>
+							</NavLink>
+							<NavLink to="contact" onClick={toggleNavbar}>
+								<li className="flex justify-between items-center group hover:text-secondary transition duration-300">Contact <HiChevronRight className="text-lg group-hover:translate-x-1 transition-transform duration-300" /></li>
+							</NavLink>
+						</ul>
+					</div>
 				</div>
-			)}
-		</div>
+			)
+			}
+		</div >
 
 
 	);
