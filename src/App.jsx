@@ -8,6 +8,7 @@ import Contact from "./Pages/Contact";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
 import NotFound from "./Pages/NotFound";
+import LabTestsDetails from "./Pages/LabTestsDetails";
 
 const App = () => {
 	return (
@@ -17,6 +18,7 @@ const App = () => {
 				<Route index element={<Homepage />} />
 				<Route path="/about" element={<About />} />
 				<Route path="/lab-tests" element={<LabTests />} />
+				<Route path="/lab-tests/:id" element={<LabTestsDetails />} />
 				<Route path="/hospitals" element={<Hospitals />} />
 				<Route path="/contact" element={<Contact />} />
 				<Route path="*" element={<NotFound />} />

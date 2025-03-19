@@ -31,21 +31,21 @@ const NavBar = () => {
 
 				{/* Menu */}
 				<div className="hidden lg:flex">
-					<ul className="flex items-center justify-center text-xs gap-5 md:gap-10 font-medium ">
+					<ul className="flex items-center justify-center text-sm gap-5 md:gap-10  ">
 						<NavLink to="/">
-							<li>HOME</li>
+							<li>Home</li>
 						</NavLink>
 						<NavLink to="about">
-							<li>ABOUT</li>
+							<li>About</li>
 						</NavLink>
 						<NavLink to="lab-tests">
-							<li>LAB TESTS</li>
+							<li>Lab Tests</li>
 						</NavLink>
 						<NavLink to="hospitals">
-							<li>HOSPITALS</li>
+							<li>Hospitals</li>
 						</NavLink>
 						<NavLink to="contact">
-							<li>CONTACT</li>
+							<li>Contact</li>
 						</NavLink>
 					</ul>
 				</div>

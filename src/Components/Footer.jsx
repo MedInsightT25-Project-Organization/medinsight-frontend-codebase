@@ -12,9 +12,10 @@ import footerLogo from '../assets/medinsight-white-logo.png'
 const Footer = () => {
   return (
     <footer
-      className="bg-darkPrimary w-full mt-auto"> {/* Newsletter Section */}
+      className="bg-darkPrimary w-full mt-auto">
+      {/* Newsletter Section */}
       <div
-        className="w-[90%] md:w-[80%] mx-auto bg-white rounded-xl shadow-lg p-6 sm:p-8 grid grid-cols-1 md:grid-cols-2 items-center justify-between gap-6 lg:gap-16 -translate-y-12"
+        className="w-[90%] md:w-[80%] mx-auto bg-white rounded-xl shadow-2xl shadow-gray-900 p-6 sm:p-8 grid grid-cols-1 md:grid-cols-2 items-center justify-between gap-6 lg:gap-16 -translate-y-12"
       >
         {/* Text Content */}
         <div className="text-center md:text-left">

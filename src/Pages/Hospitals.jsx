@@ -16,7 +16,7 @@ const Hospitals = () => {
 	// Filter items
 	const [filterItems, setFilterItems] = useState(healthcareCenters);
 	const [currentPage, setCurrentPage] = useState(0);
-	const itemsPerPage = 6;
+	const itemsPerPage = 5;
 
 	// Filter Hospitals by their local government area
 	const filterHospitalCategory = (lgaCategory) => {
@@ -53,7 +53,6 @@ const Hospitals = () => {
 		setSelectedHospital(hospital)
 		console.log(hospital)
 		console.log(selectedHospital)
-
 	}
 
 
@@ -75,13 +74,13 @@ const Hospitals = () => {
 
 						<div className="hidden md:block">
 							<h3 className="text-center text-xl text-darkPrimary">Categories</h3>
-							<span className="w-[10rem] h-[.1rem] bg-primary block mx-auto my-2"></span>
+							<span className="w-[100%] h-[.1rem] bg-primary block mx-auto my-2"></span>
 							<ul className="flex flex-col gap-3 cursor-pointer my-6">
 								{["All", ...lagosLocalGovernments].map((data) => (
 									<li
 										key={data}
 										onClick={() => filterHospitalCategory(data)}
-										className="list-none text-xs p-2 hover:bg-primary hover:text-white rounded-md transition"
+										className="list-none text-sm p-2 hover:bg-primary hover:text-white rounded-md transition"
 									>
 										{data}
 									</li>
@@ -149,10 +148,10 @@ const Hospitals = () => {
 										<div className="flex flex-col gap-2 w-full">
 											{/* Name & Verified Badge */}
 											<div className="flex items-center gap-1">
-												<h4 className="text-lg sm:text-xl font-semibold text-primary leading-tight">
-													{data.name}
+												<h4 className="text-lg sm:text-xl font-semibold text-primary leading-tight flex items-center">
+													{data.name} <RiVerifiedBadgeFill className="text-secondary text-xl sm:text-2xl ml-1" />
 												</h4>
-												<RiVerifiedBadgeFill className="text-secondary text-3xl sm:text-2xl" />
+
 											</div>
 
 											{/* Location */}
