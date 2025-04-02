@@ -9,6 +9,7 @@ import { MdLocationPin, MdShoppingCart } from 'react-icons/md'
 import { LuInfo } from 'react-icons/lu'
 import { CiHeart } from 'react-icons/ci'
 import { IoEyeOutline } from 'react-icons/io5'
+import Footer from '../Components/Footer'
 
 const LabTestsDetails = () => {
 
@@ -65,7 +66,7 @@ const LabTestsDetails = () => {
 
                         {/* Book Appointment Button */}
                         <button className="w-full flex items-center justify-center gap-2 bg-primary text-white text-sm py-4 rounded-md hover:bg-darkPrimary transition">
-                            Book Appointment <FaPaperPlane />
+                            Book Lab Test <FaPaperPlane />
                         </button>
                     </div>
 
@@ -98,7 +99,7 @@ const LabTestsDetails = () => {
                 {/* Related Lab Test */}
                 <div className="bg-white rounded-xl shadow-md p-6 transition duration-300 ease-in-out hover:shadow-lg cursor-pointer mt-6">
 
-                    <h4 className='text-xl mb-4'>You May Also Like</h4>
+                    <h4 className='text-lg mb-4 text-gray-700'>You May Also Like</h4>
                     <hr />
 
                     <div className="flex items-center overflow-x-auto  my-5 gap-4 px-4 scroll-smooth scrollbar-hide snap-x snap-mandatory">
@@ -116,7 +117,7 @@ const LabTestsDetails = () => {
                                 </div>
 
                                 {/* Card Content */}
-                                <h4 className="text-base md:text-lg font-semibold text-primary leading-tight">{data.name}</h4>
+                                <h4 className="text-base md:text-lg font-semibold text-primary leading-[1]">{data.name}</h4>
                                 <span className="text-[0.7rem] text-gray-600 border-l-4 border-primary pl-2 my-2 flex items-center justify-start">
                                     <span className="text-darkPrimary">Category</span> <FaAngleRight className="text-primary mr-1" /> {data.category}
                                 </span>
@@ -129,6 +130,7 @@ const LabTestsDetails = () => {
                 </div>
 
             </div>
+            <Footer />
 
 
 

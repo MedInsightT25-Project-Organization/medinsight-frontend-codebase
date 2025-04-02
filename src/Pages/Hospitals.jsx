@@ -10,6 +10,7 @@ import ReactPaginate from "react-paginate";
 import { PiFunnelSimple } from "react-icons/pi";
 
 import HospitalRating from "../Components/HospitalRating";
+import Footer from "../Components/Footer";
 
 // 
 const Hospitals = () => {
@@ -281,6 +282,7 @@ const Hospitals = () => {
 					</div>
 				</div>
 			</section>
+			<Footer />
 		</>
 	);
 };

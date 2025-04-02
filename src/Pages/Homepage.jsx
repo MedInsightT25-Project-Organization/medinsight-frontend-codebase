@@ -4,9 +4,10 @@ import AboutSection from "../Components/AboutSection";
 import backgroundImage from "../assets/heroImage.png"
 import { FaPaperPlane } from "react-icons/fa6";
 import Testimonial from "../Components/Testimonial";
+import Footer from "../Components/Footer";
 const Homepage = () => {
 	return (
-		<div className="">
+		<>
 			{/* Hero Slide section */}
 			<HeroSlides />
 
@@ -38,7 +39,8 @@ const Homepage = () => {
 
 			{/* Testimonial */}
 			<Testimonial />
-		</div>
+			<Footer />
+		</>
 	);
 };
 

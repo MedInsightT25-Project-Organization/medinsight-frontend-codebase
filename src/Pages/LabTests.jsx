@@ -9,9 +9,12 @@ import { PiFunnelSimple } from 'react-icons/pi';
 import { FaAngleRight } from "react-icons/fa6";
 import { LabTestContext } from '../Context Api/LabTestContext'
 import { Link, useNavigate } from 'react-router-dom';
+import Footer from '../Components/Footer';
+
+//
 const LabTests = () => {
   // To display modal
-  const { categories } = useContext(LabTestContext)
+  const { categories, addToCart } = useContext(LabTestContext)
   const [showModal, setShowModal] = useState(false)
   const [filterItems, setFilterItems] = useState(labTestsData)
   const [activeCategory, setActiveCategory] = useState("All")
@@ -33,7 +36,7 @@ const LabTests = () => {
   const navigate = useNavigate()
 
   return (
-    <div>
+    <>
       <OtherHeaderSection title="Lab Tests" backgroundImage={heroImage} subTitle="Book your lab tests with ease! Select from a wide range of medical test." />
 
       <section className='container'>
@@ -93,7 +96,7 @@ const LabTests = () => {
               {/* Single Hospital card */}
               {filterItems.slice(0, 8).map((data) => (
                 <div
-                  onClick={() => navigate(`/lab-tests/${data.id}`)}
+                  // onClick={() => navigate(`/lab-tests/${data.id}`)}
                   key={data.id}
 
                   className="group bg-white card-shadow p-6 rounded-xl shadow-md transition-all duration-300 ease-in-out hover:shadow-lg cursor-pointer relative"
@@ -105,7 +108,7 @@ const LabTests = () => {
                     <IoEyeOutline onClick={() => navigate(`/lab-tests/${data.id}`)} className="hover:text-primary transition-all duration-300 cursor-pointer" />
 
                     {/*  */}
-                    <MdShoppingCart className="hover:text-primary transition-all duration-300 cursor-pointer" />
+                    <MdShoppingCart onClick={() => addToCart(data.id)} className="hover:text-primary transition-all duration-300 cursor-pointer" />
                     {/*  */}
                     <CiHeart className="hover:text-primary transition-all duration-300 cursor-pointer" />
                   </div>
@@ -123,8 +126,9 @@ const LabTests = () => {
           </div>
         </div>
       </section >
+      <Footer />
 
-    </div >
+    </>
   )
 }
 
