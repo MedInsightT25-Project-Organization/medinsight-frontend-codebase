@@ -72,7 +72,7 @@ const HealthcareFormOne = () => {
               </div>
 
 
-              <div className="mb-5 flex flex-col gap-4 lg:flex-row w-full">
+              <div className="mb-2 flex flex-col gap-4 lg:flex-row w-full">
 
                 {/*  */}
                 <div className='w-full'>
