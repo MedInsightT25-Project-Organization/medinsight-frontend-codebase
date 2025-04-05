@@ -50,6 +50,7 @@ const HealthcareSignUp = () => {
                         {/* Submit Button */}
                         <div className="flex items-center justify-center">
                             <button
+                                onClick={() => navigate("/healthcare-form-one")}
                                 type="submit"
                                 className="py-4 text-sm flex items-center justify-center gap-4 bg-secondary hover:bg-darkSecondary duration-500 transition-all w-full text-white rounded-lg cursor-pointer"
                             >

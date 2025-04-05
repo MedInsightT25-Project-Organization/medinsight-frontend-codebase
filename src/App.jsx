@@ -15,6 +15,9 @@ import PatientFormOne from "./Pages/PatientSignUp/PatientFormOne";
 import PatientFormTwo from "./Pages/PatientSignUp/PatientFormTwo";
 import HealthcareSignUp from "./Pages/Healthcare-Provider-Signup/HealthcareSignUp";
 import HealthcareSignIn from "./Pages/Healthcare-Provider-Signup/HealthcareSignIn";
+import PatientDashboard from "./Pages/Dashboards/PatientDashboard";
+import HealthcareProviderDashboard from "./Pages/Dashboards/HealthcareProviderDashboard";
+import HealthcareFormOne from "./Pages/Healthcare-Provider-Signup/HealthcareFormOne";
 
 const App = () => {
 	return (
@@ -36,6 +39,17 @@ const App = () => {
 				{/*  */}
 				<Route path="/patient-form-one" element={<PatientFormOne />} />
 				<Route path="/patient-form-two" element={<PatientFormTwo />} />
+
+				{/*  */}
+				<Route path="/healthcare-form-one" element={<HealthcareFormOne />} />
+				 
+
+				{/*  */}
+				<Route path="/patient-dashboard" element={<PatientDashboard />} />
+				<Route path="/healthcare-dashboard" element={<HealthcareProviderDashboard />} />
+
+
+
 			</Routes>
 		</div>
 	);
