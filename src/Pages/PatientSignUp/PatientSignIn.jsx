@@ -60,6 +60,7 @@ const PatientSignIn = () => {
                         {/* Submit Button */}
                         <div className="flex items-center justify-center">
                             <button
+                                onClick={() => navigate("/patient-dashboard")}
                                 type="submit"
                                 className="py-4 text-sm flex items-center justify-center gap-4 bg-primary hover:bg-darkPrimary duration-500 transition-all w-full text-white rounded-lg cursor-pointer"
                             >

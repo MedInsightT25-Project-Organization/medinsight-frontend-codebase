@@ -1,19 +1,31 @@
-import React, { createContext } from 'react'
+import React, { createContext, useState, useEffect, useContext } from "react";
 
+const HospitalContext = createContext();
+export const useHospital = () => useContext(HospitalContext);
 
-// Context
-export const HospitalContext = createContext(null)
+export const HospitalProvider = ({ children }) => {
+    const [selectedHospital, setSelectedHospital] = useState(null);
 
-const HospitalContextProvider = (props) => {
+    // Load hospital from localStorage on first render
+    useEffect(() => {
+        const savedHospital = localStorage.getItem("selectedHospital");
+        if (savedHospital) {
+            setSelectedHospital(JSON.parse(savedHospital));
+        }
+    }, []);
 
-    const contextData = {}
+    // Save to localStorage on change
+    useEffect(() => {
+        if (selectedHospital) {
+            localStorage.setItem("selectedHospital", JSON.stringify(selectedHospital));
+        } else {
+            localStorage.removeItem("selectedHospital");
+        }
+    }, [selectedHospital]);
 
     return (
-        <HospitalContext.Provider value={contextData}>
-            {props.children}
+        <HospitalContext.Provider value={{ selectedHospital, setSelectedHospital }}>
+            {children}
         </HospitalContext.Provider>
-    )
-
-}
-
-export default HospitalContextProvider
+    );
+};

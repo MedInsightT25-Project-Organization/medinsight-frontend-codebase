@@ -20,6 +20,16 @@
 	scroll-behavior: smooth;
 }
 
+/* Hide scrollbar globally but still allow scrolling */
+::-webkit-scrollbar {
+	display: none;
+}
+
+* {
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+}
+
 /* Apply base styles to the whole app */
 body {
 	@apply bg-[var(--bg-color)] text-[var(--text-color)] font-poppins leading-relaxed text-base w-[100vw] overflow-x-hidden;

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useParams, useNavigate } from 'react-router-dom';
+import { useHospital } from '../Context Api/HospitalContext';
 import OtherHeaderSection from "../Components/OtherHeaderSection/OtherHeaderSection";
 import heroImage from "../assets/heroImage.png";
 import { healthcareCenters, lagosLocalGovernments } from "../assets/data";
@@ -14,6 +16,11 @@ import Footer from "../Components/Footer";
 
 // 
 const Hospitals = () => {
+	const { id } = useParams()
+	const navigate = useNavigate()
+	const { selectedHospital, setSelectedHospital } = useHospital()
+
+
 	// Filter items
 	const [filterItems, setFilterItems] = useState(healthcareCenters);
 	const [currentPage, setCurrentPage] = useState(0);
@@ -47,13 +54,25 @@ const Hospitals = () => {
 	}
 
 	// Selected Hospital
-	const [selectedHospital, setSelectedHospital] = useState(null)
+	// const [selectedHospital, setSelectedHospital] = useState(null)
 
 	const displaySelectedHospital = (hospital) => {
 		// console.log(product)
 		setSelectedHospital(hospital)
 		console.log(hospital)
 		console.log(selectedHospital)
+	}
+
+	// 
+	const handleBookAppointment = (hospital) => {
+		setSelectedHospital(hospital);
+		const isLoggedIn = !!localStorage.getItem('userToken');
+
+		if (isLoggedIn) {
+			navigate('/patient-dashboard/appointment');
+		} else {
+			navigate('/patient-sign-in', { state: { redirectTo: '/patient-dashboard/appointment' } });
+		}
 	}
 
 
@@ -251,7 +270,7 @@ const Hospitals = () => {
 
 									<button
 										className="w-full flex items-center justify-center gap-2 mt-4 bg-primary text-sm text-white py-4 rounded-md hover:bg-darkPrimary transition"
-										onClick={() => setSelectedHospital(null)}
+										onClick={handleBookAppointment}
 									>
 										Book Appointment <FaPaperPlane />
 									</button>
