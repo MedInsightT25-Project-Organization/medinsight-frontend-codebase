@@ -137,7 +137,7 @@ const PatientDashboard = () => {
                             </span>
                         </div>
                         {/*  */}
-                        <div className="flex items-center gap-3 cursor-pointer transition ml-4">
+                        <div className="flex items-center gap-3 p-2 cursor-pointer transition ml-4">
                             <div className="w-10 h-10 bg-primary/10 text-primary flex items-center justify-center rounded-full text-xl">
                                 <BsPersonFill />
                             </div>

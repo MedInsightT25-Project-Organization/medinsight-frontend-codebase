@@ -270,7 +270,7 @@ const Hospitals = () => {
 
 									<button
 										className="w-full flex items-center justify-center gap-2 mt-4 bg-primary text-sm text-white py-4 rounded-md hover:bg-darkPrimary transition"
-										onClick={handleBookAppointment}
+										// onClick={handleBookAppointment}
 									>
 										Book Appointment <FaPaperPlane />
 									</button>
