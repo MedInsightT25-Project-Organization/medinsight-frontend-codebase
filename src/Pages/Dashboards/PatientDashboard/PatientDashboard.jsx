@@ -47,7 +47,7 @@ const PatientDashboard = () => {
             onClick={handleMenuClick}
             className={`relative px-2 py-2 ${isActive(to)
                 ? "bg-blue-100 text-blue-700 font-semibold border-l-4 border-blue-600"
-                : "text-gray-700 hover:bg-gray-100 border-l-4 border-transparent"
+                : "text-gray-700 hover:bg-blue-100 border-l-4 border-transparent"
                 }`}
         >
             <NavLink to={to === "" ? "/" : to} className="block w-full h-full">

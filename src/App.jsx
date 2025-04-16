@@ -31,7 +31,7 @@ import TestResults from "./Pages/Dashboards/PatientDashboard/TestResults";
 const App = () => {
 
 	const location = useLocation()
-	const hideNavbarRoutes = ["/patient-dashboard", "/patient-dashboard/appointment", "/patient-dashboard/consultation", "/patient-dashboard/dashboard-cart", "/patient-dashboard/payments", "/patient-dashboard/user-profile", "/patient-dashboard/test-results",  "/healthcare-dashboard"];
+	const hideNavbarRoutes = ["/patient-dashboard", "/patient-dashboard/appointment", "/patient-dashboard/consultation", "/patient-dashboard/dashboard-cart", "/patient-dashboard/payments", "/patient-dashboard/user-profile", "/patient-dashboard/test-results", "/healthcare-dashboard"];
 
 	return (
 		<div className="">
@@ -60,12 +60,12 @@ const App = () => {
 				{/*  */}
 				<Route path="/patient-dashboard" element={<PatientDashboard />}>
 					<Route index element={<PatientHomeDashboard />} />
-					<Route path="appointment" element={<Appointment />} />
-					<Route path="consultation" element={<Consultation />} />
-					<Route path="dashboard-cart" element={<DashboardCart />} />
-					<Route path="payments" element={<Payments />} />
-					<Route path="user-profile" element={<UserProfile />} />
-					<Route path="test-results" element={<TestResults />} />
+					<Route path="/appointment" element={<Appointment />} />
+					<Route path="/consultation" element={<Consultation />} />
+					<Route path="/dashboard-cart" element={<DashboardCart />} />
+					<Route path="/payments" element={<Payments />} />
+					<Route path="/user-profile" element={<UserProfile />} />
+					<Route path="/test-results" element={<TestResults />} />
 
 				</Route>
 				<Route path="/healthcare-dashboard" element={<HealthcareProviderDashboard />} />
