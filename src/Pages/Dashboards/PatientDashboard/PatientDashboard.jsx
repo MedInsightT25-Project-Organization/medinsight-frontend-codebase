@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { FaTachometerAlt, FaCalendarCheck, FaComments, FaShoppingCart, FaMoneyCheckAlt, FaUserCircle, FaVials, FaSignOutAlt, FaBars } from "react-icons/fa";
-import Logo from '../../../assets/MEDINSIGHT LOGO-2.png';
-import ProfilePhoto from '../../../assets/profile-photo.png';
+import {
+    FaTachometerAlt,
+    FaCalendarCheck,
+    FaComments,
+    FaShoppingCart,
+    FaMoneyCheckAlt,
+    FaUserCircle,
+    FaVials,
+    FaSignOutAlt,
+    FaBars
+} from "react-icons/fa";
+import Logo from "../../../assets/MEDINSIGHT LOGO-2.png";
+import ProfilePhoto from "../../../assets/profile-photo.png";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { BsPersonFill } from "react-icons/bs";
 import { IoNotifications } from "react-icons/io5";
@@ -11,20 +21,24 @@ import { FaOpencart } from "react-icons/fa6";
 
 const PatientDashboard = () => {
     const navigate = useNavigate();
-    const [collapsed, setCollapsed] = useState(false);  // Sidebar starts as expanded
+    const [collapsed, setCollapsed] = useState(false);
 
     const handleLogout = () => {
         alert("Logging out...");
         navigate("/patient-sign-in");
     };
 
-    const handleMenuClick = () => {
-        if (window.innerWidth < 768) setCollapsed(true);
-    };
-
     const SidebarLink = ({ to, icon, label }) => (
         <MenuItem icon={icon}>
-            <NavLink to={to === "" ? "/" : to}>
+            <NavLink
+                to={to}
+                className={({ isActive }) =>
+                    `block w-full ${isActive ? "text-primary font-semibold" : ""}`
+                }
+                onClick={() => {
+                    if (window.innerWidth < 768) setCollapsed(true);
+                }}
+            >
                 {label}
             </NavLink>
         </MenuItem>
@@ -38,11 +52,15 @@ const PatientDashboard = () => {
                 onMouseEnter={() => setCollapsed(false)}
                 onMouseLeave={() => setCollapsed(true)}
                 className={`bg-white soft-shadow text-darkPrimary transition-all duration-300 
-                            ${collapsed ? 'w-10' : 'w-[80px] md:w-[250px]'} 
-                            fixed md:relative z-30 h-full overflow-hidden`}
+                    ${collapsed ? "w-10" : "w-[80px] md:w-[250px]"} 
+                    fixed md:relative z-30 h-full overflow-hidden`}
             >
                 <div className="py-3">
-                    <img src={Logo} alt="MedInsight Logo" className="w-full max-w-[150px] mx-auto" />
+                    <img
+                        src={Logo}
+                        alt="MedInsight Logo"
+                        className="w-full max-w-[150px] mx-auto"
+                    />
                 </div>
 
                 <div className="max-w-[80%] mx-auto my-5 text-center">
@@ -58,13 +76,37 @@ const PatientDashboard = () => {
 
                 {/* Menu Items */}
                 <Menu className="text-sm overflow-y-auto">
-                    <SidebarLink to="" icon={<FaTachometerAlt />} label="Dashboard" />
-                    <SidebarLink to="appointment" icon={<FaCalendarCheck />} label="Appointment" />
-                    <SidebarLink to="consultation" icon={<FaComments />} label="Consultation" />
-                    <SidebarLink to="dashboard-cart" icon={<FaShoppingCart />} label="Cart" />
-                    <SidebarLink to="payments" icon={<FaMoneyCheckAlt />} label="Payments" />
-                    <SidebarLink to="user-profile" icon={<FaUserCircle />} label="Profile" />
-                    <SidebarLink to="test-results" icon={<FaVials />} label="Test Results" />
+                    <SidebarLink to="." icon={<FaTachometerAlt />} label="Dashboard" />
+                    <SidebarLink
+                        to="appointment"
+                        icon={<FaCalendarCheck />}
+                        label="Appointment"
+                    />
+                    <SidebarLink
+                        to="consultation"
+                        icon={<FaComments />}
+                        label="Consultation"
+                    />
+                    <SidebarLink
+                        to="dashboard-cart"
+                        icon={<FaShoppingCart />}
+                        label="Cart"
+                    />
+                    <SidebarLink
+                        to="payments"
+                        icon={<FaMoneyCheckAlt />}
+                        label="Payments"
+                    />
+                    <SidebarLink
+                        to="user-profile"
+                        icon={<FaUserCircle />}
+                        label="Profile"
+                    />
+                    <SidebarLink
+                        to="test-results"
+                        icon={<FaVials />}
+                        label="Test Results"
+                    />
                     <MenuItem icon={<FaSignOutAlt />} onClick={handleLogout}>
                         Log out
                     </MenuItem>
@@ -81,8 +123,6 @@ const PatientDashboard = () => {
                     >
                         <FaBars size={20} />
                     </button>
-                    {/*  */}
-                    {/*  */}
 
                     <div className="relative inline-flex items-center justify-center w-10 h-10 rounded-full  bg-white card-shadow mx-2">
                         <FaOpencart className="text-xl text-secondary" />
@@ -97,7 +137,7 @@ const PatientDashboard = () => {
                             5
                         </span>
                     </div>
-                    {/*  */}
+
                     <div className="flex items-center gap-1  cursor-pointer transition ml-4">
                         <div className="w-10 h-10 bg-primary/10 text-primary flex items-center justify-center rounded-full text-xl">
                             <BsPersonFill />
@@ -110,16 +150,14 @@ const PatientDashboard = () => {
 
                         <IoMdArrowDropdown className="hidden sm:block text-gray-600 text-lg ml-auto" />
                     </div>
-
-
                 </div>
 
-                {/* Main content */}
+                {/* Main outlet */}
                 <div className="flex-1 overflow-y-auto bg-white p-4 rounded-xl mt-4">
                     <Outlet />
                 </div>
-            </main >
-        </div >
+            </main>
+        </div>
     );
 };
 
