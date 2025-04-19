@@ -96,7 +96,7 @@ const Appointment = () => {
     }
 
     return (
-        <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 cursor-pointer'>
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 cursor-pointer'>
             <div className='col-span-2'>
                 {/* Book Appointment */}
                 <div className="w-full overflow-x-auto ">

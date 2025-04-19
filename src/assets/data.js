@@ -1,3 +1,8 @@
+import { FaTemperatureHigh, FaHeartbeat, FaTachometerAlt } from 'react-icons/fa';
+import { BsHeartPulse } from 'react-icons/bs';
+import { FiActivity } from 'react-icons/fi';
+import { GiWaterDrop } from "react-icons/gi";
+
 export const lagosLocalGovernments = [
 	"Agege",
 	"Ajeromi-Ifelodun",
@@ -392,3 +397,32 @@ export const labTestsData = [
 		address: "8 Marina Road, Badagry, Lagos",
 	},
 ];
+
+// 
+export const healthData = [
+  {
+    id: 1,
+    title: 'Body Temperature',
+    value: '98.6',
+    unit: '°F',
+    icon: FaTemperatureHigh,
+    description: 'Normal resting body temperature.',
+  },
+  {
+    id: 2,
+    title: 'Heart Rate',
+    value: '72',
+    unit: 'bpm',
+    icon: BsHeartPulse,
+    description: 'Average heart rate at rest.',
+  },
+  {
+    id: 3,
+    title: 'Blood Pressure',
+    value: '120/80',
+    unit: 'mmHg',
+    icon: GiWaterDrop,
+    description: 'Optimal blood pressure level.',
+  }
+]
+
