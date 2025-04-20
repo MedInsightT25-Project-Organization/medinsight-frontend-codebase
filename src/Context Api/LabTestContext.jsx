@@ -1,55 +1,80 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { labTestsData } from "../assets/data";
 
-//Create context
 export const LabTestContext = createContext();
 
 const getDefaultCart = () => {
-	let cart = {}
+	let cart = {};
 	for (let i = 1; i < labTestsData.length + 1; i++) {
-		cart[i] = 0
+		cart[i] = 0;
 	}
+	return cart;
+};
 
-	console.log(cart)
-
-	return cart
-}
-
-
-
-
-
-// Custom hook to use the context
+// Custom hook
 export const useLabTest = () => useContext(LabTestContext);
 
-// const [filterCategory, setFilterCategory] = useState()
-
-
-//Provider component
 const LabTestProvider = ({ children }) => {
 	const [selectedLabTest, setSelectedLabTest] = useState(null);
 
-	// 
-	const [cartItems, setCartItems] = useState(getDefaultCart)
+	// ✅ Load cart from localStorage or default
+	const [cartItems, setCartItems] = useState(() => {
+		const savedCart = localStorage.getItem("labCart");
+		return savedCart ? JSON.parse(savedCart) : getDefaultCart();
+	});
 
-	// To get all the category
-	const categories = ["All", ...new Set(labTestsData.map((test) => test.category))]
-	// console.log(categories)
+	// ✅ Save cart to localStorage on change
+	useEffect(() => {
+		localStorage.setItem("labCart", JSON.stringify(cartItems));
+	}, [cartItems]);
 
+	// Categories
+	const categories = ["All", ...new Set(labTestsData.map((test) => test.category))];
 
-	// Function to add to cart
+	// Add to cart
 	const addToCart = (itemId) => {
-		setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }))
-		console.log(cartItems)
+		setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+	};
 
-	}
+	// Remove from cart
+	const removeFromCart = (itemId) => {
+		setCartItems((prev) => ({
+			...prev,
+			[itemId]: Math.max(prev[itemId] - 1, 0),
+		}));
+	};
 
+	// Total cart count
+	const getTotalCartCount = () => {
+		return Object.values(cartItems).reduce((total, count) => total + count, 0);
+	};
 
-	const contextValue = { selectedLabTest, setSelectedLabTest, categories, addToCart }
-	return (
-		<LabTestContext.Provider value={contextValue}>
-			{children}
-		</LabTestContext.Provider>
-	);
-}
-export default LabTestProvider
+	// Total cart amount
+	const getTotalCartAmount = () => {
+		let totalAmount = 0;
+		for (const item in cartItems) {
+			if (cartItems[item] > 0) {
+				const itemInfo = labTestsData.find((labTest) => labTest.id === Number(item));
+				if (itemInfo) {
+					totalAmount += cartItems[item] * itemInfo.price;
+				}
+			}
+		}
+		return totalAmount;
+	};
+
+	const contextValue = {
+		selectedLabTest,
+		setSelectedLabTest,
+		categories,
+		cartItems,
+		addToCart,
+		removeFromCart,
+		getTotalCartCount,
+		getTotalCartAmount,
+	};
+
+	return <LabTestContext.Provider value={contextValue}>{children}</LabTestContext.Provider>;
+};
+
+export default LabTestProvider;

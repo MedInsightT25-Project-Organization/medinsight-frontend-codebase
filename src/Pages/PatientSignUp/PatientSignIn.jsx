@@ -3,6 +3,9 @@ import { FaEnvelope, FaLock } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 
 const PatientSignIn = () => {
+    const handleForm = (e) => {
+        e.preventDefault()
+    }
     const navigate = useNavigate()
     return (
         <>

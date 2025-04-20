@@ -7,14 +7,15 @@ import { CiHeart } from "react-icons/ci";
 import { IoEyeOutline } from "react-icons/io5";
 import { PiFunnelSimple } from 'react-icons/pi';
 import { FaAngleRight } from "react-icons/fa6";
-import { LabTestContext } from '../Context Api/LabTestContext'
+
 import { Link, useNavigate } from 'react-router-dom';
 import Footer from '../Components/Footer';
+import { useLabTest } from '../Context Api/LabTestContext';
 
 //
 const LabTests = () => {
   // To display modal
-  const { categories, addToCart } = useContext(LabTestContext)
+  const { categories, addToCart } = useLabTest()
   const [showModal, setShowModal] = useState(false)
   const [filterItems, setFilterItems] = useState(labTestsData)
   const [activeCategory, setActiveCategory] = useState("All")

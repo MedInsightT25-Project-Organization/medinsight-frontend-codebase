@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import logo from "../assets/MED-LOGO.png";
 import { NavLink, useNavigate } from "react-router-dom";
-import { FiSearch } from "react-icons/fi";
+import { FiSearch, FiShoppingCart } from "react-icons/fi";
 import { FaOpencart } from "react-icons/fa6";
 import { IoIosSend } from "react-icons/io";
 import { TbMenu3 } from "react-icons/tb";
 import { HiChevronRight } from "react-icons/hi";
+import { useLabTest } from "../Context Api/LabTestContext";
 const NavBar = () => {
 	const [showNavbar, setShowNavbar] = useState(false);
+	const { getTotalCartCount } = useLabTest()
+	const totalItems = getTotalCartCount()
 
-	const navgigate = useNavigate()
+	const navigate = useNavigate()
 
 	//function to toggle Navbar
 	const toggleNavbar = () => {
@@ -54,11 +57,20 @@ const NavBar = () => {
 
 				<div className="flex items-center justify-center gap-4 sm:gap-8">
 					<div className="flex items-center justify-center gap-2 sm:gap-5">
-						<FiSearch className="p-3 rounded-full border border-primary text-primary hover:text-secondary hover:border-secondary transition-all duration-300 text-[2.5rem]" />
-						<FaOpencart className="hidden sm:inline-flex p-3 rounded-full border border-primary text-primary hover:text-secondary hover:border-secondary transition-all duration-300 text-[2.5rem]" />
+						{/* <FiSearch className="p-3 rounded-full border border-primary text-primary hover:text-secondary hover:border-secondary transition-all duration-300 text-[2.5rem]" /> */}
+
+						<div className="relative">
+							<FiShoppingCart size={24} onClick={() => navigate('/patient-dashboard/dashboard-cart')} />
+							{totalItems > 0 && (
+								<span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2 py-0.5">
+									{totalItems}
+								</span>
+							)}
+						</div>
+						{/* <FaOpencart className="hidden sm:inline-flex p-3 rounded-full border border-primary text-primary hover:text-secondary hover:border-secondary transition-all duration-300 text-[2.5rem]" /> */}
 					</div>
 
-					<button onClick={() => navgigate('/patient-sign-in')} className="btn btn-primary">
+					<button onClick={() => navigate('/patient-sign-in')} className="btn btn-primary">
 						Sign In <IoIosSend />
 					</button>
 

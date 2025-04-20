@@ -18,8 +18,13 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { BsPersonFill } from "react-icons/bs";
 import { IoNotifications } from "react-icons/io5";
 import { FaOpencart } from "react-icons/fa6";
+import { useLabTest } from "../../../Context Api/LabTestContext";
 
 const PatientDashboard = () => {
+    const { getTotalCartCount } = useLabTest()
+    const totalItems = getTotalCartCount()
+
+
     const navigate = useNavigate();
     const [collapsed, setCollapsed] = useState(false);
 
@@ -126,9 +131,13 @@ const PatientDashboard = () => {
 
                     <div className="relative inline-flex items-center justify-center w-10 h-10 rounded-full  bg-white card-shadow mx-2">
                         <FaOpencart className="text-xl text-secondary" />
-                        <span className="absolute top-0 right-0 transform translate-x-1/3 -translate-y-1/3 bg-primary text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm">
-                            3
-                        </span>
+
+                        {totalItems > 0 && (
+                            <span className="absolute top-0 right-0 transform translate-x-1/3 -translate-y-1/3 bg-primary text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm">
+                                {totalItems}
+                            </span>
+                        )}
+
                     </div>
 
                     <div className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-white card-shadow mx-2">
