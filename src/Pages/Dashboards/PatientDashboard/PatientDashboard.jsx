@@ -129,23 +129,29 @@ const PatientDashboard = () => {
                         <FaBars size={20} />
                     </button>
 
-                    <div className="relative inline-flex items-center justify-center w-10 h-10 rounded-full  bg-white card-shadow mx-2">
-                        <FaOpencart className="text-xl text-secondary" />
+                    <div>
 
-                        {totalItems > 0 && (
+
+
+                        <div className="relative inline-flex items-center justify-center w-10 h-10 rounded-full  bg-white card-shadow mx-2">
+                            <FaOpencart className="text-xl text-secondary" />
+
+                            {totalItems > 0 && (
+                                <span className="absolute top-0 right-0 transform translate-x-1/3 -translate-y-1/3 bg-primary text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm">
+                                    {totalItems}
+                                </span>
+                            )}
+
+                        </div>
+
+                        <div className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-white card-shadow mx-2">
+                            <IoNotifications className="text-xl text-secondary" />
                             <span className="absolute top-0 right-0 transform translate-x-1/3 -translate-y-1/3 bg-primary text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm">
-                                {totalItems}
+                                5
                             </span>
-                        )}
-
+                        </div>
                     </div>
 
-                    <div className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-white card-shadow mx-2">
-                        <IoNotifications className="text-xl text-secondary" />
-                        <span className="absolute top-0 right-0 transform translate-x-1/3 -translate-y-1/3 bg-primary text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm">
-                            5
-                        </span>
-                    </div>
 
                     <div className="flex items-center gap-1  cursor-pointer transition ml-4">
                         <div className="w-10 h-10 bg-primary/10 text-primary flex items-center justify-center rounded-full text-xl">
