@@ -1,6 +1,10 @@
-import { FaTemperatureHigh, FaHeartbeat, FaTachometerAlt } from 'react-icons/fa';
-import { BsHeartPulse } from 'react-icons/bs';
-import { FiActivity } from 'react-icons/fi';
+import {
+	FaTemperatureHigh,
+	FaHeartbeat,
+	FaTachometerAlt,
+} from "react-icons/fa";
+import { BsHeartPulse } from "react-icons/bs";
+import { FiActivity } from "react-icons/fi";
 import { GiWaterDrop } from "react-icons/gi";
 
 export const lagosLocalGovernments = [
@@ -398,31 +402,98 @@ export const labTestsData = [
 	},
 ];
 
-// 
+//
 export const healthData = [
-  {
-    id: 1,
-    title: 'Body Temperature',
-    value: '98.6',
-    unit: '°F',
-    icon: FaTemperatureHigh,
-    description: 'Normal resting body temperature.',
-  },
-  {
-    id: 2,
-    title: 'Heart Rate',
-    value: '72',
-    unit: 'bpm',
-    icon: BsHeartPulse,
-    description: 'Average heart rate at rest.',
-  },
-  {
-    id: 3,
-    title: 'Blood Pressure',
-    value: '120/80',
-    unit: 'mmHg',
-    icon: GiWaterDrop,
-    description: 'Optimal blood pressure level.',
-  }
-]
+	{
+		id: 1,
+		title: "Body Temperature",
+		value: "98.6",
+		unit: "°F",
+		icon: FaTemperatureHigh,
+		description: "Normal resting body temperature.",
+	},
+	{
+		id: 2,
+		title: "Heart Rate",
+		value: "72",
+		unit: "bpm",
+		icon: BsHeartPulse,
+		description: "Average heart rate at rest.",
+	},
+	{
+		id: 3,
+		title: "Blood Pressure",
+		value: "120/80",
+		unit: "mmHg",
+		icon: GiWaterDrop,
+		description: "Optimal blood pressure level.",
+	},
+];
 
+//
+export const testResults = [
+	{
+		id: 1,
+		testName: "Complete Blood Count (CBC)",
+		date: "2025-04-19",
+		status: "Completed",
+		resultSummary: "All levels within normal range.",
+		resultFile: "/results/cbc.pdf",
+	},
+	{
+		id: 2,
+		testName: "Malaria Parasite Test",
+		date: "2025-04-18",
+		status: "Pending",
+		resultSummary: null,
+		resultFile: null,
+	},
+	{
+		id: 3,
+		testName: "Liver Function Test",
+		date: "2025-04-17",
+		status: "Completed",
+		resultSummary: "Slight elevation in ALT and AST levels.",
+		resultFile: "/results/liver-function.pdf",
+	},
+	{
+		id: 4,
+		testName: "HIV Test",
+		date: "2025-04-16",
+		status: "Completed",
+		resultSummary: "Negative.",
+		resultFile: "/results/hiv.pdf",
+	},
+	{
+		id: 5,
+		testName: "COVID-19 PCR Test",
+		date: "2025-04-15",
+		status: "Completed",
+		resultSummary: "Negative for SARS-CoV-2 RNA.",
+		resultFile: "/results/covid19.pdf",
+	},
+	{
+		id: 6,
+		testName: "Urinalysis",
+		date: "2025-04-14",
+		status: "Pending",
+		resultSummary: null,
+		resultFile: null,
+	},
+	{
+		id: 7,
+		testName: "Blood Sugar (Fasting)",
+		date: "2025-04-13",
+		status: "Completed",
+		resultSummary: "Fasting glucose within healthy range.",
+		resultFile: "/results/blood-sugar.pdf",
+	},
+	{
+		id: 8,
+		testName: "Thyroid Profile (T3, T4, TSH)",
+		date: "2025-04-12",
+		status: "Completed",
+		resultSummary: "TSH slightly elevated, others normal.",
+		resultFile: "/results/thyroid.pdf",
+	},
+];
