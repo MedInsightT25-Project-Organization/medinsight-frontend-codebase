@@ -27,11 +27,18 @@ import DashboardCart from "./Pages/Dashboards/PatientDashboard/DashboardCart";
 import Payments from "./Pages/Dashboards/PatientDashboard/Payments";
 import UserProfile from "./Pages/Dashboards/PatientDashboard/UserProfile";
 import TestResults from "./Pages/Dashboards/PatientDashboard/TestResults";
+import HealthcareHomeDashboard from "./Pages/Dashboards/HealthcareProviderDashboard/HealthcareHomeDashboard";
+import SendTestResult from "./Pages/Dashboards/HealthcareProviderDashboard/SendTestResult";
+import UploadLabTest from "./Pages/Dashboards/HealthcareProviderDashboard/UploadLabTest";
+import HealthcareProfile from "./Pages/Dashboards/HealthcareProviderDashboard/HealthcareProfile";
 
 const App = () => {
 
 	const location = useLocation()
-	const hideNavbarRoutes = ["/patient-dashboard", "/patient-dashboard/appointment", "/patient-dashboard/consultation", "/patient-dashboard/dashboard-cart", "/patient-dashboard/payments", "/patient-dashboard/user-profile", "/patient-dashboard/test-results", "/healthcare-dashboard"];
+	const hideNavbarRoutes = ["/patient-dashboard", "/patient-dashboard/appointment", "/patient-dashboard/consultation", "/patient-dashboard/dashboard-cart", "/patient-dashboard/payments", "/patient-dashboard/user-profile", "/patient-dashboard/test-results", "/healthcare-dashboard", "/healthcare-dashboard/send-test-result", "/healthcare-dashboard/upload-test-result", "/healthcare-dashboard/healthcare-profile",
+
+
+	];
 
 	return (
 		<div className="">
@@ -57,7 +64,7 @@ const App = () => {
 				<Route path="/healthcare-form-one" element={<HealthcareFormOne />} />
 
 
-				{/*  */}
+				{/* Patient Dashboard */}
 				<Route path="/patient-dashboard" element={<PatientDashboard />}>
 					<Route index element={<PatientHomeDashboard />} />
 					<Route path="appointment" element={<Appointment />} />
@@ -68,7 +75,14 @@ const App = () => {
 					<Route path="test-results" element={<TestResults />} />
 
 				</Route>
-				<Route path="/healthcare-dashboard" element={<HealthcareProviderDashboard />} />
+				{/* Healthcare Providers Dashboard */}
+				<Route path="/healthcare-dashboard" element={<HealthcareProviderDashboard />}>
+
+					<Route index element={<HealthcareHomeDashboard />} />
+					<Route path="send-test-result" element={<SendTestResult />} />
+					<Route path="upload-test-result" element={<UploadLabTest />} />
+					<Route path="healthcare-profile" element={<HealthcareProfile />} />
+				</Route>
 
 			</Routes>
 		</div>

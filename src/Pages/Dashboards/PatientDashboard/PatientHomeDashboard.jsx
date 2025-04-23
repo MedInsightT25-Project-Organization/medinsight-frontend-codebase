@@ -2,13 +2,19 @@ import React from 'react'
 import { healthData } from '../../../assets/data'
 import PulseCard from '../../../Components/PulseCard';
 import { useLabTest } from '../../../Context Api/LabTestContext';
+import waveHand from '../../../assets/wave-hand.png';
 
 const PatientHomeDashboard = () => {
- 
+
     return (
         <>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-4 jusify-between'>
                 <div className="col-span-1 flex flex-col">
+
+                    <div className='my-4'>
+                        <h3 className='text-primary text-xl sm:text-3xl flex items-center'>Welcome, Temi... <img src={waveHand} className='w-8 sm:w-10 filter drop-shadow-lg' alt="Wave Hand" /> </h3>
+                        <p className='text-gray-600 text-[.7rem] sm:text-sm'>Start your day with new activities</p>
+                    </div>
 
 
                     {/* Health Statistics  */}
@@ -73,7 +79,7 @@ const PatientHomeDashboard = () => {
                     </div>
 
                     {/* Pulse Chart */}
-                    <PulseCard />
+                  
 
 
 
