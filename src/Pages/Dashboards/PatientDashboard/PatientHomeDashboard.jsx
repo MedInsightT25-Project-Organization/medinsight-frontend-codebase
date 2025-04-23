@@ -3,6 +3,9 @@ import { healthData } from '../../../assets/data'
 import PulseCard from '../../../Components/PulseCard';
 import { useLabTest } from '../../../Context Api/LabTestContext';
 import waveHand from '../../../assets/wave-hand.png';
+import LineChartRender from '../../../Components/Charts/LineChart'
+import ECGChartJS from '../../../Components/Charts/EcgDataChart';
+import PulseGauge from '../../../Components/Charts/ReactGaugaeChart';
 
 const PatientHomeDashboard = () => {
 
@@ -79,7 +82,10 @@ const PatientHomeDashboard = () => {
                     </div>
 
                     {/* Pulse Chart */}
-                  
+                    {/* <LineChartRender />
+                    <ECGChartJS />
+                    <PulseGauge/> */}
+
 
 
 
