@@ -81,10 +81,7 @@ const PatientHomeDashboard = () => {
                         })}
                     </div>
 
-                    {/* Pulse Chart */}
-                    {/* <LineChartRender />
-                    <ECGChartJS />
-                    <PulseGauge/> */}
+                     
 
 
 

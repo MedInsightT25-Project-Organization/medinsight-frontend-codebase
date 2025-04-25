@@ -112,7 +112,7 @@ const PatientDashboard = () => {
                 </div>
 
                 {/* Menu Items */}
-                <Menu className="text-sm overflow-y-auto">
+                <Menu className="text-sm overflow-hidden">
                     <SidebarLink to="." icon={<FaTachometerAlt />} label="Dashboard" />
                     <SidebarLink
                         to="appointment"

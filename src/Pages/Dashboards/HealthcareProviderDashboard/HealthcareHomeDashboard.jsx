@@ -1,5 +1,6 @@
 import React from 'react'
 import waveHand from '../../../assets/wave-hand.png'
+import DashboardCards from '../../../Components/Dashboard Components/DashboardCards'
 const HealthcareHomeDashboard = () => {
     return (
         <>
@@ -11,6 +12,7 @@ const HealthcareHomeDashboard = () => {
                 </div>
 
             </section>
+            <DashboardCards />
 
         </>
     )
