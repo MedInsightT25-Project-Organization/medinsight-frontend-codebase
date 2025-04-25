@@ -5,7 +5,10 @@ import backgroundImage from "../assets/heroImage.png"
 import { FaPaperPlane } from "react-icons/fa6";
 import Testimonial from "../Components/Testimonial";
 import Footer from "../Components/Footer";
+import { useNavigate } from "react-router-dom";
 const Homepage = () => {
+
+	const navigate = useNavigate()
 	return (
 		<>
 			{/* Hero Slide section */}
@@ -29,13 +32,16 @@ const Homepage = () => {
 					<p className="text-[.7rem] md:text-base text-gray-200 my-1 max-w-lg leading-snug">
 						Our secure and intuitive platform transforms how healthcare is accessed and delivered. Join us today and take control of your healthcare journey!
 					</p>
-					<button className="btn bg-secondary hover:bg-white hover:text-primary">
+					<button
+						onClick={() => { navigate('/patient-sign-in'); scrollTo(0, 0) }}
+
+						className="btn bg-secondary hover:bg-white hover:text-primary">
 						Get Started <FaPaperPlane />
 					</button>
 				</div>
-
-
 			</section>
+
+
 
 			{/* Testimonial */}
 			<Testimonial />

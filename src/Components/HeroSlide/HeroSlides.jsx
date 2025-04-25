@@ -7,6 +7,7 @@ import "swiper/css/navigation";
 import heroImage from "./heroImage.png";
 import './HeroSlide.css'
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const slides = [
 	{
@@ -30,6 +31,7 @@ const slides = [
 ];
 
 const HeroSlides = () => {
+	const navigate = useNavigate()
 	return (
 		<Swiper
 			effect="fade"
@@ -65,10 +67,16 @@ const HeroSlides = () => {
 							</div>
 
 							<div className="flex gap-4">
-								<button className="text-[0.4rem] btn btn-white">
+								<button
+									onClick={() => { navigate('/patient-sign-in'); scrollTo(0, 0) }}
+
+									className="text-[0.4rem] btn btn-white">
 									Patients <IoIosArrowRoundForward />
 								</button>
-								<button className="btn btn-primary">
+								<button
+									onClick={() => { navigate('/healthcare-sign-in'); scrollTo(0, 0) }}
+
+									className="btn btn-primary">
 									Healthcare Providers <IoIosArrowRoundForward />
 								</button>
 							</div>

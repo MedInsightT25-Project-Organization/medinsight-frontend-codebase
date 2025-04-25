@@ -3,6 +3,7 @@ import CountUp from "react-countup";
 import aboutImage from "../assets/About-images/about-section-image.png";
 import patientDashboard from '../assets/About-images/patient-dashboard.png'
 import adminDashboard from '../assets/About-images/healthcare-dashboard.png'
+import FeaturedHospitals from "./FeaturedHospitals";
 const AboutSection = () => {
   return (
     <>
@@ -57,6 +58,10 @@ const AboutSection = () => {
           </div>
         </div>
       </section>
+
+
+      {/*  */}
+      <FeaturedHospitals/>
 
       {/* Patient Section */}
       <section className="bg-white container mx-auto grid grid-cols-1 lg:grid-cols-5 items-center gap-8 p-6 cursor-pointer">

@@ -1,36 +1,34 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-
-import Homepage from "./Pages/Homepage";
-import LabTests from "./Pages/LabTests";
-import Hospitals from "./Pages/Hospitals";
-import Blog from "./Pages/Blog";
+import React, { Suspense, lazy } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+ 
 import NavBar from "./Components/NavBar";
-import Footer from "./Components/Footer";
-import NotFound from "./Pages/NotFound";
-import LabTestsDetails from "./Pages/LabTestsDetails";
-import PatientSignUp from "./Pages/PatientSignUp/PatientSignUp";
-import PatientSignIn from "./Pages/PatientSignUp/PatientSignIn";
-import Cart from "./Pages/Cart";
-import PatientFormOne from "./Pages/PatientSignUp/PatientFormOne";
-import PatientFormTwo from "./Pages/PatientSignUp/PatientFormTwo";
-import HealthcareSignUp from "./Pages/Healthcare-Provider-Signup/HealthcareSignUp";
-import HealthcareSignIn from "./Pages/Healthcare-Provider-Signup/HealthcareSignIn";
-import PatientDashboard from "./Pages/Dashboards/PatientDashboard/PatientDashboard";
-import HealthcareProviderDashboard from "./Pages/Dashboards/HealthcareProviderDashboard/HealthcareProviderDashboard";
-import HealthcareFormOne from "./Pages/Healthcare-Provider-Signup/HealthcareFormOne";
-import PatientHomeDashboard from "./Pages/Dashboards/PatientDashboard/PatientHomeDashboard";
-import Appointment from "./Pages/Dashboards/PatientDashboard/Appointment";
-import Consultation from "./Pages/Dashboards/PatientDashboard/Consultation";
-import DashboardCart from "./Pages/Dashboards/PatientDashboard/DashboardCart";
-import Payments from "./Pages/Dashboards/PatientDashboard/Payments";
-import UserProfile from "./Pages/Dashboards/PatientDashboard/UserProfile";
-import TestResults from "./Pages/Dashboards/PatientDashboard/TestResults";
-import HealthcareHomeDashboard from "./Pages/Dashboards/HealthcareProviderDashboard/HealthcareHomeDashboard";
-import SendTestResult from "./Pages/Dashboards/HealthcareProviderDashboard/SendTestResult";
-import UploadLabTest from "./Pages/Dashboards/HealthcareProviderDashboard/UploadLabTest";
-import HealthcareProfile from "./Pages/Dashboards/HealthcareProviderDashboard/HealthcareProfile";
+import Loader from "./Components/Loader";
+const Homepage = lazy(() => import("./Pages/Homepage"));
+const LabTests = lazy(() => import("./Pages/LabTests"));
+const Hospitals = lazy(() => import("./Pages/Hospitals"));
+const Blog = lazy(() => import("./Pages/Blog"));
+const NotFound = lazy(() => import("./Pages/NotFound"));
+const LabTestsDetails = lazy(() => import("./Pages/LabTestsDetails"));
+const PatientSignUp = lazy(() => import("./Pages/PatientSignUp/PatientSignUp"));
+const PatientSignIn = lazy(() => import("./Pages/PatientSignUp/PatientSignIn"));
+const Cart = lazy(() => import("./Pages/Cart"));
+const PatientFormOne = lazy(() => import("./Pages/PatientSignUp/PatientFormOne"));
+const HealthcareSignUp = lazy(() => import("./Pages/Healthcare-Provider-Signup/HealthcareSignUp"));
+const HealthcareSignIn = lazy(() => import("./Pages/Healthcare-Provider-Signup/HealthcareSignIn"));
+const PatientDashboard = lazy(() => import("./Pages/Dashboards/PatientDashboard/PatientDashboard"));
+const HealthcareProviderDashboard = lazy(() => import("./Pages/Dashboards/HealthcareProviderDashboard/HealthcareProviderDashboard"));
+const HealthcareFormOne = lazy(() => import("./Pages/Healthcare-Provider-Signup/HealthcareFormOne"));
+const PatientHomeDashboard = lazy(() => import("./Pages/Dashboards/PatientDashboard/PatientHomeDashboard"));
+const Appointment = lazy(() => import("./Pages/Dashboards/PatientDashboard/Appointment"));
+const Consultation = lazy(() => import("./Pages/Dashboards/PatientDashboard/Consultation"));
+const DashboardCart = lazy(() => import("./Pages/Dashboards/PatientDashboard/DashboardCart"));
+const Payments = lazy(() => import("./Pages/Dashboards/PatientDashboard/Payments"));
+const UserProfile = lazy(() => import("./Pages/Dashboards/PatientDashboard/UserProfile"));
+const TestResults = lazy(() => import("./Pages/Dashboards/PatientDashboard/TestResults"));
+const HealthcareHomeDashboard = lazy(() => import("./Pages/Dashboards/HealthcareProviderDashboard/HealthcareHomeDashboard"));
+const SendTestResult = lazy(() => import("./Pages/Dashboards/HealthcareProviderDashboard/SendTestResult"));
+const UploadLabTest = lazy(() => import("./Pages/Dashboards/HealthcareProviderDashboard/UploadLabTest"));
+const HealthcareProfile = lazy(() => import("./Pages/Dashboards/HealthcareProviderDashboard/HealthcareProfile"));
 
 const App = () => {
 
@@ -43,48 +41,49 @@ const App = () => {
 	return (
 		<div className="">
 			{!hideNavbarRoutes.includes(location.pathname) && <NavBar />}
-			<Routes>
-				<Route index element={<Homepage />} />
-				<Route path="/lab-tests" element={<LabTests />} />
-				<Route path="/lab-tests/:id" element={<LabTestsDetails />} />
-				<Route path="/hospitals" element={<Hospitals />} />
-				<Route path="/cart" element={<Cart />} />
-				<Route path="/patient-sign-up" element={<PatientSignUp />} />
-				<Route path="/patient-sign-in" element={<PatientSignIn />} />
-				<Route path="/healthcare-sign-up" element={<HealthcareSignUp />} />
-				<Route path="/healthcare-sign-in" element={<HealthcareSignIn />} />
-				<Route path="/blog" element={<Blog />} />
-				<Route path="*" element={<NotFound />} />
+			<Suspense fallback={<Loader />}>
+				<Routes>
+					<Route index element={<Homepage />} />
+					<Route path="/lab-tests" element={<LabTests />} />
+					<Route path="/lab-tests/:id" element={<LabTestsDetails />} />
+					<Route path="/hospitals" element={<Hospitals />} />
+					<Route path="/cart" element={<Cart />} />
+					<Route path="/patient-sign-up" element={<PatientSignUp />} />
+					<Route path="/patient-sign-in" element={<PatientSignIn />} />
+					<Route path="/healthcare-sign-up" element={<HealthcareSignUp />} />
+					<Route path="/healthcare-sign-in" element={<HealthcareSignIn />} />
+					<Route path="/blog" element={<Blog />} />
+					<Route path="*" element={<NotFound />} />
 
-				{/*  */}
-				<Route path="/patient-form-one" element={<PatientFormOne />} />
-				<Route path="/patient-form-two" element={<PatientFormTwo />} />
+					{/*  */}
+					<Route path="/patient-form-one" element={<PatientFormOne />} />
 
-				{/*  */}
-				<Route path="/healthcare-form-one" element={<HealthcareFormOne />} />
+					{/*  */}
+					<Route path="/healthcare-form-one" element={<HealthcareFormOne />} />
 
 
-				{/* Patient Dashboard */}
-				<Route path="/patient-dashboard" element={<PatientDashboard />}>
-					<Route index element={<PatientHomeDashboard />} />
-					<Route path="appointment" element={<Appointment />} />
-					<Route path="consultation" element={<Consultation />} />
-					<Route path="dashboard-cart" element={<DashboardCart />} />
-					<Route path="payments" element={<Payments />} />
-					<Route path="user-profile" element={<UserProfile />} />
-					<Route path="test-results" element={<TestResults />} />
+					{/* Patient Dashboard */}
+					<Route path="/patient-dashboard" element={<PatientDashboard />}>
+						<Route index element={<PatientHomeDashboard />} />
+						<Route path="appointment" element={<Appointment />} />
+						<Route path="consultation" element={<Consultation />} />
+						<Route path="dashboard-cart" element={<DashboardCart />} />
+						<Route path="payments" element={<Payments />} />
+						<Route path="user-profile" element={<UserProfile />} />
+						<Route path="test-results" element={<TestResults />} />
 
-				</Route>
-				{/* Healthcare Providers Dashboard */}
-				<Route path="/healthcare-dashboard" element={<HealthcareProviderDashboard />}>
+					</Route>
+					{/* Healthcare Providers Dashboard */}
+					<Route path="/healthcare-dashboard" element={<HealthcareProviderDashboard />}>
 
-					<Route index element={<HealthcareHomeDashboard />} />
-					<Route path="send-test-result" element={<SendTestResult />} />
-					<Route path="upload-test-result" element={<UploadLabTest />} />
-					<Route path="healthcare-profile" element={<HealthcareProfile />} />
-				</Route>
+						<Route index element={<HealthcareHomeDashboard />} />
+						<Route path="send-test-result" element={<SendTestResult />} />
+						<Route path="upload-test-result" element={<UploadLabTest />} />
+						<Route path="healthcare-profile" element={<HealthcareProfile />} />
+					</Route>
 
-			</Routes>
+				</Routes>
+			</Suspense>
 		</div>
 	);
 };
