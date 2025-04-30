@@ -7,8 +7,13 @@ import { IoIosSend } from "react-icons/io";
 import { TbMenu3 } from "react-icons/tb";
 import { HiChevronRight } from "react-icons/hi";
 import { useLabTest } from "../Context Api/LabTestContext";
+import { useAuth } from "../contexts/AuthContext";
+import { IoPersonCircleOutline } from "react-icons/io5";
+import { MdArrowDropDown } from "react-icons/md";
 const NavBar = () => {
 	const [showNavbar, setShowNavbar] = useState(false);
+	const { isAuthenticated } = useAuth()
+
 	const { getTotalCartCount } = useLabTest()
 	const totalItems = getTotalCartCount()
 
@@ -18,6 +23,8 @@ const NavBar = () => {
 	const toggleNavbar = () => {
 		setShowNavbar(!showNavbar);
 	};
+
+
 
 
 	// function to remove menu bar
@@ -59,10 +66,10 @@ const NavBar = () => {
 					<div className="flex items-center justify-center gap-2 sm:gap-5">
 						{/* <FiSearch className="p-3 rounded-full border border-primary text-primary hover:text-secondary hover:border-secondary transition-all duration-300 text-[2.5rem]" /> */}
 
-						<div className="relative">
-							<FiShoppingCart size={24} onClick={() => navigate('/patient-dashboard/dashboard-cart')} />
+						<div className="relative" onClick={() => navigate('/patient-dashboard/dashboard-cart')}>
+							<FiShoppingCart size={22} />
 							{totalItems > 0 && (
-								<span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2 py-0.5">
+								<span className="absolute -top-2 -right-2 bg-secondary text-white text-[.7rem] rounded-full px-1 py-0.5">
 									{totalItems}
 								</span>
 							)}
@@ -70,9 +77,21 @@ const NavBar = () => {
 						{/* <FaOpencart className="hidden sm:inline-flex p-3 rounded-full border border-primary text-primary hover:text-secondary hover:border-secondary transition-all duration-300 text-[2.5rem]" /> */}
 					</div>
 
-					<button onClick={() => navigate('/patient-sign-in')} className="btn btn-primary">
-						Sign In <IoIosSend />
-					</button>
+					{isAuthenticated ? (
+
+						<div className="flex items-center justify-center gap-1">
+
+							<IoPersonCircleOutline className="text-darkSecondary" size={30} />
+							{/* <MdArrowDropDown /> */}
+						</div>
+
+					) : (
+						<button onClick={() => navigate('/patient-sign-in')} className="btn btn-primary">
+							Sign In <IoIosSend />
+						</button>
+					)}
+
+
 
 					{/* Menu Icon */}
 					<button onClick={toggleNavbar} className="inline-block lg:hidden">

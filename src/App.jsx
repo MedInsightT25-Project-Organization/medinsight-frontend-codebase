@@ -1,8 +1,12 @@
 import React, { Suspense, lazy } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
- 
+
 import NavBar from "./Components/NavBar";
 import Loader from "./Components/Loader";
+import ProtectedRoute from "./Pages/layout/ProtectedRoute";
+import VerifyEmail from "./Pages/PatientSignUp/VerifyEmail";
+import EmailVerified from "./Pages/PatientSignUp/EmailVerified";
+import ResetPassword from "./Pages/ResetPassword";
 const Homepage = lazy(() => import("./Pages/Homepage"));
 const LabTests = lazy(() => import("./Pages/LabTests"));
 const Hospitals = lazy(() => import("./Pages/Hospitals"));
@@ -15,7 +19,7 @@ const Cart = lazy(() => import("./Pages/Cart"));
 const PatientFormOne = lazy(() => import("./Pages/PatientSignUp/PatientFormOne"));
 const HealthcareSignUp = lazy(() => import("./Pages/Healthcare-Provider-Signup/HealthcareSignUp"));
 const HealthcareSignIn = lazy(() => import("./Pages/Healthcare-Provider-Signup/HealthcareSignIn"));
-const PatientDashboard = lazy(() => import("./Pages/Dashboards/PatientDashboard/PatientDashboard"));
+const PatientDashboardLayout = lazy(() => import("./Pages/layout/PatientDashboardLayout"));
 const HealthcareProviderDashboard = lazy(() => import("./Pages/Dashboards/HealthcareProviderDashboard/HealthcareProviderDashboard"));
 const HealthcareFormOne = lazy(() => import("./Pages/Healthcare-Provider-Signup/HealthcareFormOne"));
 const PatientHomeDashboard = lazy(() => import("./Pages/Dashboards/PatientDashboard/PatientHomeDashboard"));
@@ -60,27 +64,36 @@ const App = () => {
 
 					{/*  */}
 					<Route path="/healthcare-form-one" element={<HealthcareFormOne />} />
-
+					<Route path="/verify-email" element={<VerifyEmail />} />
+					<Route path="/email-verified" element={<EmailVerified />} />
+					<Route path="/reset-password" element={<ResetPassword />} />
 
 					{/* Patient Dashboard */}
-					<Route path="/patient-dashboard" element={<PatientDashboard />}>
-						<Route index element={<PatientHomeDashboard />} />
-						<Route path="appointment" element={<Appointment />} />
-						<Route path="consultation" element={<Consultation />} />
-						<Route path="dashboard-cart" element={<DashboardCart />} />
-						<Route path="payments" element={<Payments />} />
-						<Route path="user-profile" element={<UserProfile />} />
-						<Route path="test-results" element={<TestResults />} />
+					<Route element={<ProtectedRoute />}>
+						<Route path="/patient-dashboard" element={<PatientDashboardLayout />}>
+							<Route index element={<PatientHomeDashboard />} />
+							<Route path="appointment" element={<Appointment />} />
+							<Route path="consultation" element={<Consultation />} />
+							<Route path="dashboard-cart" element={<DashboardCart />} />
+							<Route path="payments" element={<Payments />} />
+							<Route path="user-profile" element={<UserProfile />} />
+							<Route path="test-results" element={<TestResults />} />
 
+						</Route>
 					</Route>
 					{/* Healthcare Providers Dashboard */}
-					<Route path="/healthcare-dashboard" element={<HealthcareProviderDashboard />}>
 
-						<Route index element={<HealthcareHomeDashboard />} />
-						<Route path="send-test-result" element={<SendTestResult />} />
-						<Route path="upload-test-result" element={<UploadLabTest />} />
-						<Route path="healthcare-profile" element={<HealthcareProfile />} />
+					<Route element={<ProtectedRoute />}>
+						<Route path="/healthcare-dashboard" element={<HealthcareProviderDashboard />}>
+
+							<Route index element={<HealthcareHomeDashboard />} />
+							<Route path="send-test-result" element={<SendTestResult />} />
+							<Route path="upload-test-result" element={<UploadLabTest />} />
+							<Route path="healthcare-profile" element={<HealthcareProfile />} />
+						</Route>
 					</Route>
+
+					<Route path="*" element={<NotFound />} />
 
 				</Routes>
 			</Suspense>

@@ -12,21 +12,38 @@ import {
     FaSignOutAlt,
     FaBars
 } from "react-icons/fa";
-import Logo from "../../../assets/MEDINSIGHT LOGO-2.png";
-import ProfilePhoto from "../../../assets/profile-photo.png";
+import Logo from "../../assets/MEDINSIGHT LOGO-2.png";
+import ProfilePhoto from "../../assets/profile-photo.png";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { BsPersonFill } from "react-icons/bs";
 import { IoNotifications } from "react-icons/io5";
 import { FaOpencart } from "react-icons/fa6";
-import { useLabTest } from "../../../Context Api/LabTestContext";
+import { useLabTest } from "../../Context Api/LabTestContext";
+import { useAuth } from "../../contexts/AuthContext";
+import LogoutModal from "../../Components/Modals/LogoutModal";
 
 
-const PatientDashboard = () => {
+const PatientDashboardLayout = () => {
+    const { logout } = useAuth();
+    const [showModal, setShowModal] = useState(false);
+    // 
+
+    const handleLogout = () => {
+        logout();
+        setShowModal(!showModal);
+
+        navigate("/patient-sign-in");
+    };
+
+
     const { getTotalCartCount } = useLabTest();
     const totalItems = getTotalCartCount();
 
     const navigate = useNavigate();
     const [collapsed, setCollapsed] = useState(false);
+
+
+
 
     // Handle screen size for collapsibility
     function useIsMediumUp() {
@@ -51,10 +68,9 @@ const PatientDashboard = () => {
         setCollapsed(!isMediumUp);
     }, [isMediumUp]);
 
-    const handleLogout = () => {
-        alert("Logging out...");
-        navigate("/patient-sign-in");
-    };
+
+
+
 
     const SidebarLink = ({ to, icon, label }) => {
         const isActive = location.pathname === to;
@@ -144,11 +160,18 @@ const PatientDashboard = () => {
                         icon={<FaVials />}
                         label="Test Results"
                     />
-                    <MenuItem icon={<FaSignOutAlt />} onClick={handleLogout}>
+                    <MenuItem icon={<FaSignOutAlt />}
+                        onClick={() => setShowModal(true)}>
                         Log out
                     </MenuItem>
                 </Menu>
             </Sidebar>
+
+            <LogoutModal
+                isOpen={showModal}
+                onClose={() => setShowModal(false)}
+                onConfirm={handleLogout}
+            />
 
             {/* Main Content */}
             <main className="flex-1 min-h-0 flex flex-col overflow-hidden transition-all duration-300 pl-2 sm:pl-8">
@@ -188,7 +211,8 @@ const PatientDashboard = () => {
                 </div>
             </main>
         </div>
-    );
-};
 
-export default PatientDashboard;
+    );
+
+}
+export default PatientDashboardLayout;
