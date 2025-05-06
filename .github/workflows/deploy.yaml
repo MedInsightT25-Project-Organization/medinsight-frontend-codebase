@@ -10,7 +10,7 @@ jobs:
       BUCKET: medinsight.com.ng
       # DIST: build
       REGION: us-east-1
-      DIST_ID: E1RFVGU31UPY18 # change later
+      DIST_ID: E22MKWCO847I8E
 
     steps:
       - name: Checkout
