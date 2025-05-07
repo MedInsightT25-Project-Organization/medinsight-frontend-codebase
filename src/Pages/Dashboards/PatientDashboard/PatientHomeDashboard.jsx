@@ -1,8 +1,15 @@
 import React from 'react';
 import { healthData } from '../../../assets/data';
 import waveHand from '../../../assets/wave-hand.png';
+import EcgDataChart from '../../../Components/Charts/EcgDataChart'
+import { useHospitalContext } from '../../../Context Api/HospitalContext';
+import AppointmentCard from '../../../Components/AppointmentCard';
+import DashboardCalendar from '../../../Components/DashboardCalendar';
+
 
 const PatientHomeDashboard = () => {
+    const { appointments } = useHospitalContext();
+
     return (
         <div className="space-y-4">
             {/* Full-width Greeting */}
@@ -21,7 +28,7 @@ const PatientHomeDashboard = () => {
             </div>
 
             {/* Grid layout for Stats and Recent Activity */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 {/* Health Statistics */}
                 <div className="bg-white rounded-xl p-6 soft-shadow space-y-4">
                     {/* Row 1 */}
@@ -73,8 +80,38 @@ const PatientHomeDashboard = () => {
                         })}
                     </div>
 
+                    {/*  */}
+
+
                 </div>
+
+
             </div>
+
+            {/* ECG Chart, Appointments, Calendar in Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
+                {/* ECG Chart */}
+                <EcgDataChart />
+
+
+                {/* Appointments */}
+                <div className="bg-white rounded-xl p-6 card-shadow h-full">
+                    <h3 className="text-base font-medium text-gray-800 mb-2">Upcoming Appointments</h3>
+                    {appointments.length > 0 ? (
+                        appointments.map((appt, idx) => (
+                            <AppointmentCard key={idx} appt={appt} />
+                        ))
+                    ) : (
+                        <p className="text-sm text-gray-500">No upcoming appointments.</p>
+                    )}
+                </div>
+
+                {/* Calendar */}
+
+                <DashboardCalendar />
+
+            </div>
+
         </div>
     );
 };
