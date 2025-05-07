@@ -1,17 +1,71 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaPhone } from "react-icons/fa6";
 import { BsFillPersonFill } from "react-icons/bs";
 import { LuCalendarFold } from 'react-icons/lu';
 import { ImLocation } from 'react-icons/im';
 import { GoArrowRight } from 'react-icons/go';
 import { useNavigate } from 'react-router-dom';
-
+import { useProfile } from '../../contexts/PatientContexts/PatientProfileContext';
+import { toast, Toaster } from 'react-hot-toast';
 const PatientFormOne = () => {
   const navigate = useNavigate()
+  const { createProfile, fetchProfile } = useProfile()
+  const [formData, setFormData] = useState(
+    {
+      fullName: '',
+      address: '',
+      phoneNumber: '',
+      dob: '',
+      gender: '',
+      localGovernment: '',
+      occupation: '',
+      emergencyContact: '',
+      emergencyContactNumber: '',
+    })
+
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+  // 
+
+  const handleProfileSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+    console.log(formData)
+
+    try {
+
+      await createProfile(formData)
+      await fetchProfile()
+      toast.success('Profile Registration Successful', { duration: 10000 })
+
+      setTimeout(() => {
+        navigate('/patient-dashboard')
+      }, 5000)
+
+      console.log(formData)
+    }
+    catch (err) {
+      console.log(formData)
+      setError(err.response?.data?.message || 'Registration failed');
+
+      console.log(err);
+      toast.error(err.response?.data?.message || 'Registration failed');
+    } finally {
+      console.log(formData)
+      setLoading(false);
+    }
+
+  }
   return (
     <>
-
+      <Toaster />
       <section className='container grid lg:grid-cols-3 gap-4'>
+
         {/*  */}
         <div className='lg:col-span-1 flex flex-col items-center justify-center'>
 
@@ -35,14 +89,17 @@ const PatientFormOne = () => {
 
           <div className='bg-white p-6 rounded-xl soft-shadow'>
 
-            <form action="
-              ">
+            <form onSubmit={handleProfileSubmit}>
               {/*  Name Field */}
               <div className='mb-5'>
                 <label htmlFor="fullName" className="block text-[.75rem] font-light text-primary mb-1">
                   Full Name
                 </label>
                 <input
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+
                   id="fullName"
                   type="text"
                   placeholder="Mr. Temi Williams"
@@ -61,6 +118,9 @@ const PatientFormOne = () => {
                   <div className='relative'>
                     <FaPhone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
                     <input
+                      name="phoneNumber"
+                      value={formData.phoneNumber}
+                      onChange={handleChange}
                       id="number"
                       type="tel"
                       placeholder="0910000000"
@@ -79,6 +139,9 @@ const PatientFormOne = () => {
                   <div className='relative'>
                     <BsFillPersonFill className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
                     <input
+                      name="occupation"
+                      value={formData.occupation}
+                      onChange={handleChange}
                       id="occupation"
                       type="text"
                       placeholder=""
@@ -99,6 +162,9 @@ const PatientFormOne = () => {
                   <div className='relative'>
                     <LuCalendarFold className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
                     <input
+                      name="dob"
+                      value={formData.dob}
+                      onChange={handleChange}
                       id="dob"
                       type="date"
                       placeholder="Select your birth date"
@@ -117,10 +183,12 @@ const PatientFormOne = () => {
                       {/* Male */}
                       <label className="flex items-center space-x-2 cursor-pointer">
                         <input
+
+                          value={formData.gender === "male"}
+                          onChange={handleChange}
                           type="radio"
                           name="gender"
-                          value="male"
-                          className="peer hidden"
+                          className="peer sr-only"
                           required
                         />
                         <span className="w-5 h-5 rounded-full border-2 border-gray-400 flex items-center justify-center peer-checked:border-transparent peer-checked:bg-gradient-to-r from-green-500 to-yellow-400 transition-all duration-300">
@@ -133,9 +201,11 @@ const PatientFormOne = () => {
                       <label className="flex items-center space-x-2 cursor-pointer">
                         <input
                           type="radio"
+                          value={formData.gender === "female"}
+                          onChange={handleChange}
                           name="gender"
-                          value="female"
-                          className="peer hidden"
+                          // value="female"
+                          className="peer sr-only"
                         />
                         <span className="w-5 h-5 rounded-full border-2 border-gray-400 flex items-center justify-center peer-checked:border-transparent peer-checked:bg-gradient-to-r from-pink-500 to-purple-500 transition-all duration-300">
                           <span className="w-2.5 h-2.5 bg-white rounded-full peer-checked:bg-white"></span>
@@ -143,19 +213,6 @@ const PatientFormOne = () => {
                         <span className="text-sm text-gray-700">Female</span>
                       </label>
 
-                      {/* Other */}
-                      <label className="flex items-center space-x-2 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="gender"
-                          value="other"
-                          className="peer hidden"
-                        />
-                        <span className="w-5 h-5 rounded-full border-2 border-gray-400 flex items-center justify-center peer-checked:border-transparent peer-checked:bg-gradient-to-r from-blue-500 to-cyan-400 transition-all duration-300">
-                          <span className="w-2.5 h-2.5 bg-white rounded-full peer-checked:bg-white"></span>
-                        </span>
-                        <span className="text-sm text-gray-700">Other</span>
-                      </label>
                     </div>
                   </fieldset>
 
@@ -174,6 +231,9 @@ const PatientFormOne = () => {
                   <div className='relative'>
                     <ImLocation className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
                     <input
+                      name="address"
+                      value={formData.address}
+                      onChange={handleChange}
                       id="address"
                       type="text"
                       placeholder="ex. House Number, Street Name, City, State."
@@ -191,7 +251,9 @@ const PatientFormOne = () => {
                   <select
 
                     id="lga"
-                    name="lga"
+                    name="localGovernment"
+                    value={formData.localGovernment}
+                    onChange={handleChange}
                     className="w-full pl-4 pr-4 py-4 text-[.75rem] border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary"
                     defaultValue=""
                     required
@@ -236,9 +298,12 @@ const PatientFormOne = () => {
 
                     <div className='relative'>
                       <input
+                        name="emergencyContact"
+                        value={formData.emergencyContact}
+                        onChange={handleChange}
                         id="emergencyname"
                         type="text"
-                        placeholder="Mr. Temi Williams"
+                        placeholder="Emergency Contact Name"
                         className="w-full py-4 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary"
                         required
                       />
@@ -254,9 +319,12 @@ const PatientFormOne = () => {
                     <div className='relative'>
                       <FaPhone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
                       <input
+                        name="emergencyContactNumber"
+                        value={formData.emergencyContactNumber}
+                        onChange={handleChange}
                         id="emergencynumber"
                         type="tel"
-                        placeholder="0910000000"
+                        placeholder="Emergency Contact Phone"
                         required
                         className="w-full pl-12 py-4 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary"
                       />
@@ -268,18 +336,14 @@ const PatientFormOne = () => {
               {/*  */}
               <div className="flex items-center justify-center">
                 <button
-                  onClick={() => navigate('/patient-dashboard')}
+                  disabled={loading}
                   type="submit"
                   className="py-4 text-sm flex items-center justify-center gap-4 bg-primary hover:bg-darkPrimary duration-500 transition-all w-full text-white rounded-lg cursor-pointer"
                 >
-                  Save & Continue <GoArrowRight />
+                  {loading ? "Please Wait..." : " Save & Continue"}
                 </button>
               </div>
             </form>
-
-
-
-
           </div>
 
         </div>

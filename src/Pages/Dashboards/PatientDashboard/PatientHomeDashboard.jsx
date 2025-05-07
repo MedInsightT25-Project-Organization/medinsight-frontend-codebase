@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { healthData } from '../../../assets/data'
 import PulseCard from '../../../Components/PulseCard';
 import { useLabTest } from '../../../Context Api/LabTestContext';
@@ -6,8 +6,14 @@ import waveHand from '../../../assets/wave-hand.png';
 import LineChartRender from '../../../Components/Charts/LineChart'
 import ECGChartJS from '../../../Components/Charts/EcgDataChart';
 import PulseGauge from '../../../Components/Charts/ReactGaugaeChart';
+import { useProfile } from '../../../contexts/PatientContexts/PatientProfileContext';
 
 const PatientHomeDashboard = () => {
+
+    const { profile, loading, error } = useProfile()
+
+
+
 
     return (
         <>
@@ -15,7 +21,7 @@ const PatientHomeDashboard = () => {
                 <div className="col-span-1 flex flex-col">
 
                     <div className='my-4'>
-                        <h3 className='text-primary text-xl sm:text-3xl flex items-center'>Welcome, Temi... <img src={waveHand} className='w-8 sm:w-10 filter drop-shadow-lg' alt="Wave Hand" /> </h3>
+                        <h3 className='text-primary text-xl sm:text-3xl flex items-center'>Welcome, {profile?.fullName || 'User'}!<img src={waveHand} className='w-8 sm:w-10 filter drop-shadow-lg' alt="Wave Hand" /> </h3>
                         <p className='text-gray-600 text-[.7rem] sm:text-sm'>Start your day with new activities</p>
                     </div>
 
@@ -81,7 +87,7 @@ const PatientHomeDashboard = () => {
                         })}
                     </div>
 
-                     
+
 
 
 

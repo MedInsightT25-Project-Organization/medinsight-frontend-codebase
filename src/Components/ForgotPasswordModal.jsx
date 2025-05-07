@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FaEnvelope } from 'react-icons/fa'
 import { IoClose } from 'react-icons/io5'
-import { forgotPassword } from '../services/authService'
+// import { forgotPassword } from '../services/authService'
 import { toast, ToastContainer } from 'react-toastify'
 import { useAuth } from '../contexts/AuthContext'
 

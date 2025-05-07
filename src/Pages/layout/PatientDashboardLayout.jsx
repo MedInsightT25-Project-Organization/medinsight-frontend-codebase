@@ -21,14 +21,17 @@ import { FaOpencart } from "react-icons/fa6";
 import { useLabTest } from "../../Context Api/LabTestContext";
 import { useAuth } from "../../contexts/AuthContext";
 import LogoutModal from "../../Components/Modals/LogoutModal";
+import { useProfile } from "../../contexts/PatientContexts/PatientProfileContext";
 
 
 const PatientDashboardLayout = () => {
     const { logout } = useAuth();
+    const { resetProfile } = useProfile()
     const [showModal, setShowModal] = useState(false);
     // 
 
     const handleLogout = () => {
+        resetProfile()
         logout();
         setShowModal(!showModal);
 

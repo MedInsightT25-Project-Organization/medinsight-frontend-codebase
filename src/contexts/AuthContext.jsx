@@ -1,66 +1,132 @@
-// src/context/AuthContext.jsx
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import API from '../services/api'; // ✅ Use API instance, not axios
+import API from '../services/api';
 
 const AuthContext = createContext();
-export const useAuth = () => useContext(AuthContext);
+
+const authStorage = {
+  getItem: (key) => {
+    try {
+      return localStorage.getItem(key);
+    } catch (error) {
+      console.error('Auth storage read error:', error);
+      return null;
+    }
+  },
+  setItem: (key, value) => {
+    try {
+      localStorage.setItem(key, value);
+    } catch (error) {
+      console.error('Auth storage write error:', error);
+      throw new Error('Failed to persist authentication');
+    }
+  },
+  clear: () => {
+    ['token', 'refreshToken', 'user'].forEach(key => localStorage.removeItem(key));
+  }
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error('useAuth must be used within AuthProvider');
+  return context;
+};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('accessToken')); // ✅ match api.js
-  const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refreshToken'));
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+
   const navigate = useNavigate();
 
+  // Initialize auth state
   useEffect(() => {
-    if (token) {
-      const userData = JSON.parse(localStorage.getItem('user'));
-      setUser(userData);
-    }
-  }, [token]);
+    const token = authStorage.getItem('token');
+    const userData = authStorage.getItem('user');
 
-  const signup = async (formData, role) => {
+    if (token && userData) {
+      setUser(JSON.parse(userData));
+    }
+  }, []);
+
+  // Handle auth success
+  const handleAuthSuccess = useCallback((data) => {
+    const { token, refreshToken, user } = data;
+    authStorage.setItem('token', token);
+    authStorage.setItem('refreshToken', refreshToken);
+    authStorage.setItem('user', JSON.stringify(user));
+    setIsEmailVerified(user.isEmailVerified || false);
+    setUser(user);
+    setError(null);
+  }, []);
+
+  // Enhanced logout that coordinates with API.js
+  const logout = useCallback(async (error) => {
     try {
-      const url = role === 'patient'
+      const refreshToken = authStorage.getItem('refreshToken');
+      if (refreshToken) {
+        await API.post('/auth/logout', { refreshToken });
+      }
+    } catch (err) {
+      console.error('Logout error:', err);
+    } finally {
+      authStorage.clear();
+      setUser(null);
+      navigate(error ? '/error' : user?.role === 'practitioner'
+        ? '/practitioner-sign-in'
+        : '/patient-sign-in');
+    }
+  }, [user, navigate]);
+
+  // Add global error handler for API.js 401 errors
+  useEffect(() => {
+    const responseInterceptor = API.interceptors.response.use(
+      response => response,
+      async error => {
+        if (error.response?.status === 401 && error.config._retry) {
+          // Refresh token failed - force logout
+          await logout(new Error('Session expired'));
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    return () => API.interceptors.response.eject(responseInterceptor);
+  }, [logout]);
+
+  // Auth methods
+  const signup = async (formData, role) => {
+    setLoading(true);
+    try {
+      const endpoint = role === 'patient'
         ? '/auth/register/patient'
         : '/auth/register/practitioner';
-      const res = await API.post(url, formData); // ✅ Use API instead of axios
+      const res = await API.post(endpoint, formData);
       handleAuthSuccess(res.data);
-
-      await sendVerificationEmail(res.data.user.email)
+      await API.post('/auth/send-verification-email', { email: res.data.user.email });
+      return res.data;
     } catch (error) {
-      console.error('Signup failed:', error.response?.data?.message || error.message);
+      setError(error.response?.data?.message || 'Registration failed');
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Send Verification Email
-  const sendVerificationEmail = async (email) => {
+  const signin = async (credentials) => {
+    setLoading(true);
     try {
-      await API.post('/auth/send-verification-email', { email });
-    } catch (error) {
-      console.error('Sending verification email failed:', error.response?.data?.message || error.message);
-      throw error;
-    }
-  };
-
-
-  const signin = async (formData) => {
-    try {
-      const res = await API.post('/auth/login', formData); // ✅ Common login endpoint
+      const res = await API.post('/auth/login', credentials);
       handleAuthSuccess(res.data);
+      
+      return res.data;
 
-      // Redirect based on role
-      // if (res.data.user.role === 'patient') {
-      //   navigate('/patient-dashboard');
-      // } else if (res.data.user.role === 'provider') {
-      //   navigate('/provider/dashboard');
-      // } else {
-      //   navigate('/');
-      // }
     } catch (error) {
-      console.error('Signin failed:', error.response?.data?.message || error.message);
+      setError(error.response?.data?.message || 'Login failed');
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -73,63 +139,28 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-
-  // const logout = () => {
-  //   setUser(null);
-  //   setToken(null);
-  //   setRefreshToken(null);
-  //   localStorage.removeItem('accessToken');  
-  //   localStorage.removeItem('refreshToken');
-  //   localStorage.removeItem('user');
-  //   navigate('/');
-  // };
-
-  const logout = async () => {
+  const sendVerificationEmail = async (email) => {
     try {
-      if (refreshToken) {
-        await API.post('/auth/logout', { refreshToken }, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-      }
+      await API.post('/auth/send-verification-email', { email });
     } catch (error) {
-      console.error('Logout failed:', error.response?.data?.message || error.message);
-      // You might want to still proceed to clear the state
-    } finally {
-      // Always clear frontend state
-      setUser(null);
-      setToken(null);
-      setRefreshToken(null);
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('user');
-      navigate('/patient-sign-in');
+      console.error('Sending verification email failed:', error.response?.data?.message || error.message);
+      throw error;
     }
   };
 
 
-  const handleAuthSuccess = (data) => {
-    const { token, refreshToken, user } = data;
-    setToken(token);
-    setRefreshToken(refreshToken);
-    setUser(user);
-    localStorage.setItem('accessToken', token); // ✅ correct key
-    localStorage.setItem('refreshToken', refreshToken);
-    localStorage.setItem('user', JSON.stringify(user));
-  };
-
   const value = {
+    sendVerificationEmail,
+    forgotPassword,
     user,
-    token,
-    refreshToken,
+    loading,
+    error,
+    isAuthenticated: !!authStorage.getItem('token'),
+    isVerified: user?.emailVerified || false,
     signup,
     signin,
-    forgotPassword,
-    sendVerificationEmail,
     logout,
-    isAuthenticated: !!token,
+    clearError: () => setError(null)
   };
-
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

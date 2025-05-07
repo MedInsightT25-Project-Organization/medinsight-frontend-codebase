@@ -5,6 +5,7 @@ import { loginPatient } from '../../services/authService'
 import { Toaster, toast } from 'react-hot-toast';
 import ForgotPasswordModal from '../../Components/ForgotPasswordModal';
 import { useAuth } from '../../contexts/AuthContext';
+import { useProfile } from '../../contexts/PatientContexts/PatientProfileContext';
 
 
 
@@ -12,7 +13,9 @@ const PatientSignIn = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const from = location.state?.from?.pathname || "/patient-dashboard"
-    const { signin } = useAuth()
+    const { signin, setIsAuthenticated } = useAuth()
+
+    const { fetchProfile, isEmailVerified, hasCompletedOnboarding } = useProfile()
     const [formData, setFormData] = useState({ email: "", password: "" })
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
@@ -20,7 +23,6 @@ const PatientSignIn = () => {
     const [forgotPasswordModal, setForgotPasswordModal] = useState(false)
 
 
-    // onClick={() => navigate("/patient-dashboard")}
     const toggleResetPasswordModal = () => {
         setForgotPasswordModal(!forgotPasswordModal)
     }
@@ -37,7 +39,11 @@ const PatientSignIn = () => {
 
         try {
             await signin(formData, "patient");
+            await fetchProfile()
+
+
             toast.success('Login successful!', { duration: 5000 });
+
 
 
             setTimeout(() => {
@@ -94,8 +100,8 @@ const PatientSignIn = () => {
                         </div>
 
                         {/* Error / Success  */}
-                        {error && <p>{error}</p>}
-                        {success && <p>{success}</p>}
+                        {/* {error && <p>{error}</p>}
+                        {success && <p>{success}</p>} */}
 
 
                         {/* Forgot password */}

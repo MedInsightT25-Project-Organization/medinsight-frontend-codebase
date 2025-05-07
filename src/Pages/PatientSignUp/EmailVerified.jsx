@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import API from '../../services/api';
-import { toast } from 'react-hot-toast'; // make sure you're using hot-toast if you've switched
+import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 
 const EmailVerified = () => {
@@ -18,12 +18,34 @@ const EmailVerified = () => {
                 return;
             }
 
+            setLoading(true);
+
             try {
-                await API.post('/auth/verify-email', { token });
+                const response = await API.post('/auth/verify-email', { token });
+                console.log("Verification Response:", response.data); // Debug
                 toast.success('Email verified successfully!');
 
+                // Get role from response or localStorage
+                const userRole =
+                    response.data.user?.role ||
+                    searchParams.get('role') ||
+                    JSON.parse(localStorage.getItem('user'))?.role;
+
+                console.log("User Role:", userRole); // Debug
+
+                // Handle role-based redirection
                 setTimeout(() => {
-                    navigate('/patient-form-one');
+                    if (userRole === 'patient') {
+                        navigate('/patient-form-one'); // Redirect to patient form
+                    } else {
+                        (userRole === 'hospital_admin')
+                        navigate('/healthcare-form-one'); // Redirect to healthcare provider form
+                    }
+
+                    //                     else {
+                    //     toast.error('Invalid role detected. Redirecting to sign-up.');
+                    //     navigate('/patient-sign-up'); // Fallback in case of unknown role
+                    // }
                 }, 2000);
             } catch (error) {
                 console.error("Verification failed: ", error);
@@ -35,7 +57,7 @@ const EmailVerified = () => {
         };
 
         verifyEmail();
-    }, [token, navigate]);
+    }, [token, navigate, searchParams]);
 
     return (
         <div className="flex flex-col items-center justify-center h-screen text-center px-4">
@@ -58,7 +80,6 @@ const EmailVerified = () => {
                     <p className="text-lg">Redirecting...</p>
                 </>
             )}
-
         </div>
     );
 };

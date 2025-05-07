@@ -11,9 +11,9 @@ const AppointmentSuccessModal = ({ appointmentId, onClose }) => {
                 >
                     &times;
                 </button>
-s
+
                 {/* Icon */}
-                <GiCheckMark className="text-secondary border-4 border-secondary rounded-full text-6xl p-4 mx-auto mb-4" />
+                <GiCheckMark className="text-secondary border-2 border-secondary rounded-full text-6xl p-4 mx-auto mb-4" />
 
                 {/* Heading */}
                 <h5 className="text-darkPrimary text-lg sm:text-xl font-semibold mb-3">

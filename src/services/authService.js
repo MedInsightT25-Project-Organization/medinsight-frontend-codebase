@@ -23,7 +23,6 @@ export const loginPatient = async (credentials) => {
 	return response.data;
 };
 
-
 // export const loginUser = async (credentials) => {
 // 	const response = await API.post("auth/login", credentials);
 // 	return response.data;

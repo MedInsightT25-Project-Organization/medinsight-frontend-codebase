@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { FaAngleRight } from "react-icons/fa";
+import { MdOutlineStickyNote2 } from "react-icons/md";
 
 const UploadLabTest = () => {
   const [form, setForm] = useState({
@@ -10,14 +12,48 @@ const UploadLabTest = () => {
     category: "",
   });
 
+  const [labTests, setLabTests] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  // Load lab tests from localStorage on component mount
+  useEffect(() => {
+    const savedLabTests = JSON.parse(localStorage.getItem("labTests")) || [];
+    setLabTests(savedLabTests);
+  }, []);
+
+  // Save lab tests to localStorage whenever labTests changes
+  useEffect(() => {
+    if (labTests.length > 0) {
+      localStorage.setItem("labTests", JSON.stringify(labTests));
+    }
+  }, [labTests]);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // handle submission (e.g., send to backend or update state)
-    console.log("Submitted Lab Test:", form);
+    setLabTests([...labTests, form]);
+
+    // Show success modal for 3 seconds
+    setShowSuccessModal(true);
+    setTimeout(() => setShowSuccessModal(false), 3000);
+
+    // Reset the form after submission
+    setForm({
+      name: "",
+      description: "",
+      price: "",
+      preparation: "",
+      resultTime: "",
+      category: "",
+    });
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (
@@ -59,7 +95,7 @@ const UploadLabTest = () => {
           <div>
             <label className="block font-medium  text-sm  text-gray-700 mb-1">Price (₦)</label>
             <input
-              type="number" 
+              type="number"
               name="price"
               value={form.price}
               onChange={handleChange}
@@ -117,7 +153,61 @@ const UploadLabTest = () => {
           </button>
         </div>
       </form>
-    </div>
+
+      {/* Success Overlay Modal */}
+      {showSuccessModal && (
+        <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+            <h3 className="text-lg font-semibold text-green-600">Success!</h3>
+            <p className="mt-2 text-gray-700">Lab Test Uploaded Successfully.</p>
+          </div>
+        </div>
+      )}
+
+
+
+      {/* Sidebar Modal */}
+      {isSidebarOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center z-50">
+          <div className="fixed top-0 right-0 w-[80%] sm:w-[60%] md:w-[50%] lg:w-96 h-full bg-white card-shadow border-l-4 border-gray-100 p-6 z-40">
+
+
+            <h3 className="text-xl font-semibold mb-4">Uploaded Lab Tests</h3>
+            <div className="grid grid-cols-1 gap-6">
+              {labTests.map((test, index) => (
+
+                <div
+
+                  key={index}
+
+                  className="group bg-white card-shadow p-6 rounded-xl shadow-md transition-all duration-300 ease-in-out hover:shadow-lg cursor-pointer relative"
+                >
+
+
+
+                  {/* Card Content */}
+                  <h4 className="text-base md:text-lg font-semibold text-primary leading-tight">{test.name}</h4>
+                  <span className="text-[0.7rem] text-gray-600 border-l-4 border-primary pl-2 my-2 flex items-center justify-start"><span className='text-darkPrimary'>Category</span> <FaAngleRight className='text-primary mr-1' /> {test.category}</span>
+                  <p className="text-[0.65rem] sm:text-xs text-gray-700 leading-relaxed mt-2 pr-6">{test.description.slice(0, 70)}...</p>
+                  <h5 className="mt-3 text-lg font-semibold text-secondary">₦{test.price}</h5>
+                </div>
+
+              ))}
+            </div>
+
+          </div>
+        </div>
+      )
+      }
+
+      {/* Toggle Button to Show/Hide Sidebar */}
+      <button
+        className="fixed bottom-6 right-6 bg-secondary text-white p-3 rounded-full shadow-lg z-50"
+        onClick={toggleSidebar}
+      >
+        <MdOutlineStickyNote2 />
+      </button>
+    </div >
   );
 };
 

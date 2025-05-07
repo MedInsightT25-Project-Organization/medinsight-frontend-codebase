@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
-import { useHospital } from '../Context Api/HospitalContext';
+import { useHospitalContext } from '../Context Api/HospitalContext';
 import OtherHeaderSection from "../Components/OtherHeaderSection/OtherHeaderSection";
 import heroImage from "../assets/heroImage.png";
 import { healthcareCenters, lagosLocalGovernments } from "../assets/data";
@@ -18,7 +18,8 @@ import Footer from "../Components/Footer";
 const Hospitals = () => {
 	const { id } = useParams()
 	const navigate = useNavigate()
-	const { selectedHospital, setSelectedHospital } = useHospital()
+	const { selectedHospital, setSelectedHospital } = useHospitalContext()
+	const [modalHospital, setModalHospital] = useState(null); // For modal display
 
 
 	// Filter items
@@ -57,6 +58,7 @@ const Hospitals = () => {
 	// const [selectedHospital, setSelectedHospital] = useState(null)
 
 	const displaySelectedHospital = (hospital) => {
+		setModalHospital(hospital)
 		// console.log(product)
 		setSelectedHospital(hospital)
 		console.log(hospital)
@@ -66,8 +68,9 @@ const Hospitals = () => {
 	// 
 	const handleBookAppointment = (hospital) => {
 		setSelectedHospital(hospital);
-		navigate('/patient-dashboard/appointment')
-		 
+
+		navigate('/patient-dashboard/appointment');
+
 	}
 
 
@@ -211,17 +214,17 @@ const Hospitals = () => {
 						</div>
 
 						{/* modal to display the selected hospital  */}
-						{selectedHospital && (
+						{modalHospital && (
 							<div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-40">
 
-								<div key={selectedHospital.id} className="bg-accent w-11/12 max-w-lg max-h-[25rem] overflow-y-auto rounded-lg shadow-lg p-4">
+								<div key={modalHospital.id} className="bg-accent w-11/12 max-w-lg max-h-[25rem] overflow-y-auto rounded-lg shadow-lg p-4">
 									{/* Header Section */}
 									<div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
 										<div className="flex flex-col gap-2 w-full">
 											{/* Name & Verified Badge */}
 											<div className="flex items-center gap-1">
 												<h4 className="text-lg sm:text-xl font-semibold text-primary leading-tight">
-													{selectedHospital.name}
+													{modalHospital.name}
 												</h4>
 												<RiVerifiedBadgeFill className="text-secondary text-3xl sm:text-2xl" />
 											</div>
@@ -230,10 +233,10 @@ const Hospitals = () => {
 											<div className="flex items-center gap-2 border-l-4 border-primary pl-2">
 												<MdLocationPin className="text-lg text-gray-600" />
 												<span className="text-sm text-gray-700">
-													{selectedHospital.address}, {selectedHospital.lga}, {selectedHospital.state}.
+													{modalHospital.address}, {modalHospital.lga}, {modalHospital.state}.
 												</span>
 											</div>
-											<HospitalRating ratings={selectedHospital.ratings} />
+											<HospitalRating ratings={modalHospital.ratings} />
 										</div>
 
 										{/* Work Hours */}
@@ -242,7 +245,7 @@ const Hospitals = () => {
 												<FaClock className="text-darkSecondary text-lg" />
 											</div>
 											<h5 className="text-xs sm:text-sm font-medium leading-tight text-gray-700">
-												{selectedHospital.workHours}
+												{modalHospital.workHours}
 											</h5>
 										</div>
 									</div>
@@ -254,7 +257,7 @@ const Hospitals = () => {
 										</h5>
 										<hr className="my-2" />
 										<ul className="flex flex-wrap items-center justify-start gap-3 text-[0.75rem] sm:text-sm text-gray-700 leading-[1rem]">
-											{selectedHospital.services.map((service, index) => (
+											{modalHospital.services.map((service, index) => (
 												<li key={index} className="flex items-center gap-1">
 													<FaRegCircleDot className="text-secondary" /> {service}
 												</li>
@@ -265,7 +268,8 @@ const Hospitals = () => {
 
 									<button
 										className="w-full flex items-center justify-center gap-2 mt-4 bg-primary text-sm text-white py-4 rounded-md hover:bg-darkPrimary transition"
-										onClick={handleBookAppointment}
+										onClick={() => handleBookAppointment(modalHospital)}
+										 
 									>
 										Book Appointment <FaPaperPlane />
 									</button>

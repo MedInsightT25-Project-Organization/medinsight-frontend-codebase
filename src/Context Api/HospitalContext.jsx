@@ -1,31 +1,52 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 
 const HospitalContext = createContext();
-export const useHospital = () => useContext(HospitalContext);
 
 export const HospitalProvider = ({ children }) => {
+    // Load appointments from localStorage or set to an empty array if not found
+    const loadAppointments = () => {
+        const storedAppointments = localStorage.getItem('appointments');
+        return storedAppointments ? JSON.parse(storedAppointments) : [];
+    };
+
     const [selectedHospital, setSelectedHospital] = useState(null);
+    const [appointments, setAppointments] = useState(loadAppointments());
 
-    // Load hospital from localStorage on first render
-    // useEffect(() => {
-    //     const savedHospital = localStorage.getItem("selectedHospital");
-    //     if (savedHospital) {
-    //         setSelectedHospital(JSON.parse(savedHospital));
-    //     }
-    // }, []);
+    // Add new appointment
+    const addAppointment = (appointment) => {
+        setAppointments((prev) => {
+            const updatedAppointments = [...prev, appointment];
+            // Save to localStorage
+            localStorage.setItem('appointments', JSON.stringify(updatedAppointments));
+            return updatedAppointments;
+        });
+    };
 
-    // Save to localStorage on change
-    // useEffect(() => {
-    //     if (selectedHospital) {
-    //         localStorage.setItem("selectedHospital", JSON.stringify(selectedHospital));
-    //     } else {
-    //         localStorage.removeItem("selectedHospital");
-    //     }
-    // }, [selectedHospital]);
+    // Remove appointment by ID
+    const removeAppointment = (id) => {
+        setAppointments((prev) => {
+            const updatedAppointments = prev.filter((app) => app.id !== id);
+            // Save to localStorage
+            localStorage.setItem('appointments', JSON.stringify(updatedAppointments));
+            return updatedAppointments;
+        });
+    };
+
+    
+
+    const contextValue = useMemo(() => ({
+        selectedHospital,
+        setSelectedHospital,
+        appointments,
+        addAppointment,
+        removeAppointment,
+    }), [selectedHospital, appointments]);
 
     return (
-        <HospitalContext.Provider value={{ selectedHospital, setSelectedHospital }}>
+        <HospitalContext.Provider value={contextValue}>
             {children}
         </HospitalContext.Provider>
     );
 };
+
+export const useHospitalContext = () => useContext(HospitalContext);
