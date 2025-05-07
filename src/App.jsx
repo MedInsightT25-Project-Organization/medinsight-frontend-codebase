@@ -69,28 +69,28 @@ const App = () => {
 					<Route path="/reset-password" element={<ResetPassword />} />
 
 					{/* Patient Dashboard */}
-					{/* <Route element={<ProtectedRoute requiredRole="patient" />}> */}
-					<Route path="/patient-dashboard" element={<PatientDashboardLayout />}>
-						<Route index element={<PatientHomeDashboard />} />
-						<Route path="appointment" element={<Appointment />} />
-						<Route path="consultation" element={<Consultation />} />
-						<Route path="dashboard-cart" element={<DashboardCart />} />
-						<Route path="payments" element={<Payments />} />
-						<Route path="user-profile" element={<UserProfile />} />
-						<Route path="test-results" element={<TestResults />} />
-
+					<Route element={<ProtectedRoute requiredRole="patient" />}>
+						<Route path="/patient-dashboard" element={<PatientDashboardLayout />}>
+							<Route index element={<PatientHomeDashboard />} />
+							<Route path="appointment" element={<Appointment />} />
+							<Route path="consultation" element={<Consultation />} />
+							<Route path="dashboard-cart" element={<DashboardCart />} />
+							<Route path="payments" element={<Payments />} />
+							<Route path="user-profile" element={<UserProfile />} />
+							<Route path="test-results" element={<TestResults />} />
+						</Route>
 					</Route>
-					{/* </Route> */}
+
 					{/* Healthcare Providers Dashboard */}
-
-					{/* <Route element={<ProtectedRoute requiredRole="hospital_admin" />}> */}
-					<Route path="/healthcare-dashboard" element={<HealthcareProviderDashboard />}>
-
-						<Route index element={<HealthcareHomeDashboard />} />
-						<Route path="send-test-result" element={<SendTestResult />} />
-						<Route path="upload-test-result" element={<UploadLabTest />} />
-						<Route path="healthcare-profile" element={<HealthcareProfile />} />
+					<Route element={<ProtectedRoute requiredRole="hospital_admin" />}>
+						<Route path="/healthcare-dashboard" element={<HealthcareProviderDashboard />}>
+							<Route index element={<HealthcareHomeDashboard />} />
+							<Route path="send-test-result" element={<SendTestResult />} />
+							<Route path="upload-test-result" element={<UploadLabTest />} />
+							<Route path="healthcare-profile" element={<HealthcareProfile />} />
+						</Route>
 					</Route>
+
 					{/* </Route> */}
 
 					<Route path="*" element={<NotFound />} />

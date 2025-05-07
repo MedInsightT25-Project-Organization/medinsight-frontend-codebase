@@ -36,25 +36,34 @@ const PatientSignIn = () => {
         setLoading(true)
         setError("")
 
-
-        try {
-            await signin(formData, "patient");
-            await fetchProfile()
+        setSuccess('Sign In successful!');
+        toast.success("Sign In successful!");
 
 
-            toast.success('Login successful!', { duration: 5000 });
+        setTimeout(() => {
+            navigate('/patient-dashboard');
+        }, 3000);
 
 
 
-            setTimeout(() => {
-                navigate(from, { replace: true });
-            }, 2000);
-        } catch (err) {
-            setError(err.response?.data?.message || 'Login failed');
-            toast.error(err.response?.data?.message || 'Login failed', { duration: 5000 }); // Error toast
-        } finally {
-            setLoading(false);
-        }
+        // try {
+        //     await signin(formData, "patient");
+        //     // await fetchProfile()
+
+
+        //     toast.success('Login successful!', { duration: 5000 });
+
+
+
+        //     setTimeout(() => {
+        //         navigate(from, { replace: true });
+        //     }, 2000);
+        // } catch (err) {
+        //     setError(err.response?.data?.message || 'Login failed');
+        //     toast.error(err.response?.data?.message || 'Login failed', { duration: 5000 }); // Error toast
+        // } finally {
+        //     setLoading(false);
+        // }
     };
 
 

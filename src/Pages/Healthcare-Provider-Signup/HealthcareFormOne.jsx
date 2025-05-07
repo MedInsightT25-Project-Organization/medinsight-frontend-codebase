@@ -42,55 +42,62 @@ const HealthcareFormOne = () => {
 
 
   // Validate the entire form
-  const validateForm = () => {
-    const newErrors = {};
+  // const validateForm = () => {
+  //   const newErrors = {};
 
-    // Validate name
-    if (!formData.name) newErrors.name = "Hospital Name is required";
+  //   // Validate name
+  //   if (!formData.name) newErrors.name = "Hospital Name is required";
 
-    // Validate contact number
-    if (!formData.contactNumber) {
-      newErrors.contactNumber = "Contact number is required";
-    } else if (!validatePhoneNumber(formData.contactNumber)) {
-      newErrors.contactNumber = "Contact number must be a valid phone number";
-    }
-    if (!formData.workHours) {
-      newErrors.workHours = "Work hours are required";
-    } else if (!validateWorkHours(formData.workHours)) {
-      newErrors.workHours = "Work hours must be in the format HH:MM-HH:MM";
-    }
+  //   // Validate contact number
+  //   if (!formData.contactNumber) {
+  //     newErrors.contactNumber = "Contact number is required";
+  //   } else if (!validatePhoneNumber(formData.contactNumber)) {
+  //     newErrors.contactNumber = "Contact number must be a valid phone number";
+  //   }
+  //   if (!formData.workHours) {
+  //     newErrors.workHours = "Work hours are required";
+  //   } else if (!validateWorkHours(formData.workHours)) {
+  //     newErrors.workHours = "Work hours must be in the format HH:MM-HH:MM";
+  //   }
 
-    return newErrors;
-  };
+  //   return newErrors;
+  // };
 
   // Handle form submission
   const handleProfileSubmit = async (e) => {
     e.preventDefault();
     setFormSubmitted(true);  // Mark the form as submitted
-    const formErrors = validateForm();
+    // const formErrors = validateForm();
 
-    if (Object.keys(formErrors).length > 0) {
-      setError(formErrors);
-      return;
-    }
+    // if (Object.keys(formErrors).length > 0) {
+    //   setError(formErrors);
+    //   return;
+    // }
 
     setLoading(true);
-    setError({});
+    toast.success("Registration successful!");
+    setTimeout(() => {
+      navigate('/healthcare-dashboard');
+    }, 3000);
 
-    try {
-      await createProfile(formData);
-      await fetchHospitalAdminProfile();
-      toast.success('Profile Registration Successful', { duration: 10000 });
+    // setError({});
 
-      setTimeout(() => {
-        navigate('/healthcare-dashboard');
-      }, 2000);
-    } catch (err) {
-      setError({ message: err.response?.data?.message || 'Registration failed' });
-      toast.error(err.response?.data?.message || 'Registration failed');
-    } finally {
-      setLoading(false);
-    }
+
+
+    // try {
+    //   await createProfile(formData);
+    //   await fetchHospitalAdminProfile();
+    //   toast.success('Profile Registration Successful', { duration: 10000 });
+
+    //   setTimeout(() => {
+    //     navigate('/healthcare-dashboard');
+    //   }, 2000);
+    // } catch (err) {
+    //   setError({ message: err.response?.data?.message || 'Registration failed' });
+    //   toast.error(err.response?.data?.message || 'Registration failed');
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   const handleChange = (e) => {

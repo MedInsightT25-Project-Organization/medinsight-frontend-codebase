@@ -10,7 +10,7 @@ import { useProfile } from '../../../contexts/PatientContexts/PatientProfileCont
 
 const PatientHomeDashboard = () => {
 
-    const { profile, loading, error } = useProfile()
+    // const { profile, loading, error } = useProfile()
 
 
 
@@ -21,7 +21,7 @@ const PatientHomeDashboard = () => {
                 <div className="col-span-1 flex flex-col">
 
                     <div className='my-4'>
-                        <h3 className='text-primary text-xl sm:text-3xl flex items-center'>Welcome, {profile?.fullName || 'User'}!<img src={waveHand} className='w-8 sm:w-10 filter drop-shadow-lg' alt="Wave Hand" /> </h3>
+                        <h3 className='text-primary text-xl sm:text-3xl flex items-center'>Hello!<img src={waveHand} className='w-8 sm:w-10 filter drop-shadow-lg' alt="Wave Hand" /> </h3>
                         <p className='text-gray-600 text-[.7rem] sm:text-sm'>Start your day with new activities</p>
                     </div>
 

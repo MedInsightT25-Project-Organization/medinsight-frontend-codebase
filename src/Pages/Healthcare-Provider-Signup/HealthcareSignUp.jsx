@@ -45,26 +45,31 @@ const HealthcareSignUp = () => {
             // setLoading(false);
             return;
         }
-        try {
-            await signup(formData, 'practitioner');
-            // send verification email
-            await sendVerificationEmail(formData.email);
+        toast.success("Registration successful!");
+        setTimeout(() => {
+            navigate('/healthcare-form-one');
+        }, 3000);
+
+        // try {
+        //     await signup(formData, 'practitioner');
+        //     // send verification email
+        //     await sendVerificationEmail(formData.email);
 
 
-            toast.success("Registration successful!");
+        //     toast.success("Registration successful!");
 
-            // Adding a delay before navigating
-            setTimeout(() => {
-                navigate('/verify-email', { state: { email: formData.email } });
-            }, 3000); // 3-second delay
-        } catch (err) {
-            console.error('Registration error:', err);
-            // setError(err.response?.data?.message || 'Registration failed');
-            console.log(err);
-            toast.error(err.response?.data?.message || 'Registration failed');
-        } finally {
-            // setLoading(false);
-        }
+        //     // Adding a delay before navigating
+        //     setTimeout(() => {
+        //         navigate('/verify-email', { state: { email: formData.email } });
+        //     }, 3000); // 3-second delay
+        // } catch (err) {
+        //     console.error('Registration error:', err);
+        //     // setError(err.response?.data?.message || 'Registration failed');
+        //     console.log(err);
+        //     toast.error(err.response?.data?.message || 'Registration failed');
+        // } finally {
+        //     // setLoading(false);
+        // }
     };
 
     return (

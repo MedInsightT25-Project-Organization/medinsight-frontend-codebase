@@ -77,19 +77,10 @@ const NavBar = () => {
 						{/* <FaOpencart className="hidden sm:inline-flex p-3 rounded-full border border-primary text-primary hover:text-secondary hover:border-secondary transition-all duration-300 text-[2.5rem]" /> */}
 					</div>
 
-					{isAuthenticated ? (
+					<button onClick={() => navigate('/patient-sign-in')} className="btn btn-primary">
+						Sign In <IoIosSend />
+					</button>
 
-						<div className="flex items-center justify-center gap-1">
-
-							<IoPersonCircleOutline className="text-darkSecondary" size={30} />
-							{/* <MdArrowDropDown /> */}
-						</div>
-
-					) : (
-						<button onClick={() => navigate('/patient-sign-in')} className="btn btn-primary">
-							Sign In <IoIosSend />
-						</button>
-					)}
 
 
 

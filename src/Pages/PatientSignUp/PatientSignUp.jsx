@@ -50,33 +50,39 @@ const PatientSignUp = () => {
             return;
         }
 
-        try {
-            await signup(formData, "patient");
+        setSuccess('Registration successful!');
+        toast.success("Registration successful!");
 
-            // send verification email
-            await sendVerificationEmail(formData.email);
+        setTimeout(() => {
+            navigate('/patient-form-one');
+        }, 3000); // 3-second delay
 
-            setSuccess('Registration successful!');
-            toast.success("Registration successful!");
+        // try {
+        //     await signup(formData, "patient");
 
-            // Adding a delay before navigating
-            setTimeout(() => {
-                navigate('/verify-email', { state: { email: formData.email } });
-            }, 3000); // 3-second delay
+        //     send verification email
+        //     await sendVerificationEmail(formData.email);
 
-        } catch (err) {
-            setError(err.response?.data?.message || 'Registration failed');
-            console.log(err);
-            toast.error(err.response?.data?.message || 'Registration failed');
-        } finally {
-            setLoading(false);
-        }
+
+
+        //     Adding a delay before navigating
+        //     setTimeout(() => {
+        //         navigate('/verify-email', { state: { email: formData.email } });
+        //     }, 3000); // 3-second delay
+
+        // } catch (err) {
+        //     setError(err.response?.data?.message || 'Registration failed');
+        //     console.log(err);
+        //     toast.error(err.response?.data?.message || 'Registration failed');
+        // } finally {
+        //     setLoading(false);
+        // }
     };
 
     return (
         <>
             <section className='container py-20'>
-                <Toaster />  
+                <Toaster />
 
                 <div className="w-full sm:max-w-[30rem] mx-auto grid grid-cols-1 items-center justify-center">
                     <form onSubmit={handleSubmit} className="space-y-4 soft-shadow rounded-2xl bg-white p-8 mx-auto mt-14 w-full">

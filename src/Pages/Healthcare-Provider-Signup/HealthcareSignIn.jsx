@@ -33,7 +33,13 @@ const HealthcareSignIn = () => {
         e.preventDefault();
         setLoading(true);
         setError("");
-        navigate('/healthcare-dashboard')
+
+        toast.success("Sign in successful!");
+        setTimeout(() => {
+            navigate('/healthcare-dashboard');
+        }, 3000);
+
+
 
         // try {
         //     const res = await signin(formData, "hospital_admin");

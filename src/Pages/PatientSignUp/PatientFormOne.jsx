@@ -35,30 +35,36 @@ const PatientFormOne = () => {
     e.preventDefault()
     setLoading(true)
     setError('')
-    console.log(formData)
 
-    try {
+    toast.success('Profile Registration Successful', { duration: 5000 })
 
-      await createProfile(formData)
-      await fetchProfile()
-      toast.success('Profile Registration Successful', { duration: 10000 })
+    setTimeout(() => {
+      navigate('/patient-dashboard')
+    }, 5000)
 
-      setTimeout(() => {
-        navigate('/patient-dashboard')
-      }, 5000)
 
-      console.log(formData)
-    }
-    catch (err) {
-      console.log(formData)
-      setError(err.response?.data?.message || 'Registration failed');
+    // try {
 
-      console.log(err);
-      toast.error(err.response?.data?.message || 'Registration failed');
-    } finally {
-      console.log(formData)
-      setLoading(false);
-    }
+    //   await createProfile(formData)
+    //   await fetchProfile()
+    //   toast.success('Profile Registration Successful', { duration: 5000 })
+
+    //   setTimeout(() => {
+    //     navigate('/patient-dashboard')
+    //   }, 5000)
+
+    //   console.log(formData)
+    // }
+    // catch (err) {
+    //   console.log(formData)
+    //   setError(err.response?.data?.message || 'Registration failed');
+
+    //   console.log(err);
+    //   toast.error(err.response?.data?.message || 'Registration failed');
+    // } finally {
+    //   console.log(formData)
+    //   setLoading(false);
+    // }
 
   }
   return (
